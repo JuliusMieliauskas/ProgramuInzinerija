@@ -1,0 +1,132 @@
+@page "/typing"
+@rendermode InteractiveAuto
+
+@using System.Timers
+
+<PageTitle>Typing</PageTitle>
+
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4">Speed Typing Game</h1>
+    
+    <div class="mb-4">
+        <p class="text-lg font-medium">Sample Text:</p>
+        <p class="text-xl bg-gray-100 p-2 rounded">@SampleText</p>
+    </div>
+    
+    <div class="mb-4">
+        <textarea @ref="textAreaReference"
+                  @bind="UserInput" 
+                  @bind:event="oninput" 
+                  @onkeydown="@HandleKeyDown"
+                  class="w-full p-2 border rounded"
+                  rows="3"
+                  placeholder="Start typing here..."
+                  disabled="@(!GameStarted)"></textarea>
+    </div>
+    
+    <div class="mb-4">
+        <p class="text-lg">Time Remaining: @TimeRemaining seconds</p>
+        <p class="text-lg">WPM: @WPM</p>
+        <p class="text-lg">Errors: @ErrorCount</p>
+    </div>
+    
+    @if (!GameStarted && TimeRemaining == 30)
+    {
+        <PrimaryButton @onclick="StartGame" class="bg-blue-500 text-white px-4 py-2 rounded">
+            Start Game
+        </PrimaryButton>
+    }
+    else if (GameStarted)
+    {
+        <p class="text-lg font-bold text-green-600">Game in progress...</p>
+    }
+    else
+    {
+        <div>
+            <p class="text-lg font-bold text-red-600">Game Over!</p>
+            <PrimaryButton @onclick="ResetGame" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">
+                Play Again
+            </PrimaryButton>
+        </div>
+    }
+</div>
+
+@code {
+    private string SampleText = "The quick brown fox jumps over the lazy dog. This is a sample text for the speed typing game. Try to type it as fast and accurately as you can within the given time limit.";
+    private string UserInput = "";
+    private Timer GameTimer;
+    private int TimeRemaining = 30;
+    private int WPM = 0;
+    private int ErrorCount = 0;
+    private bool GameStarted = false;
+    private ElementReference textAreaReference;
+
+    protected override void OnInitialized()
+    {
+        GameTimer = new Timer(1000);
+        GameTimer.Elapsed += (sender, e) => 
+        {
+            TimeRemaining--;
+            if (TimeRemaining <= 0)
+            {
+                EndGame();
+            }
+            CalculateWPM();
+            InvokeAsync(StateHasChanged);
+        };
+    }
+
+    private async Task StartGame()
+    {
+        UserInput = "";
+        TimeRemaining = 30;
+        WPM = 0;
+        ErrorCount = 0;
+        GameStarted = true;
+        GameTimer.Start();
+
+        await Task.Delay(10);
+        await textAreaReference.FocusAsync();
+    }
+
+    private void EndGame()
+    {
+        GameTimer.Stop();
+        GameStarted = false;
+        CalculateWPM();
+    }
+
+    private void ResetGame()
+    {
+        UserInput = "";
+        TimeRemaining = 30;
+        WPM = 0;
+        ErrorCount = 0;
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (!GameStarted)
+        {
+            return;
+        }
+
+        CalculateWPM();
+    }
+
+    private void CalculateWPM()
+    {
+        int totalCharacters = UserInput.Length;
+        double minutes = (30 - TimeRemaining) / 60.0;
+        
+        if (minutes > 0)
+        {
+            WPM = (int)(totalCharacters / 5.0 / minutes);
+        }
+
+        ErrorCount = UserInput
+            .Take(Math.Min(UserInput.Length, SampleText.Length))
+            .Where((c, i) => c != SampleText[i])
+            .Count();
+    }
+}
