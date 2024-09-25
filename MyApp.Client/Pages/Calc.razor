@@ -1,5 +1,35 @@
+@page "/calc"
+@rendermode InteractiveAuto
+
+<PageTitle>Quick Calculate</PageTitle>
+
+<Heading1>Quick Calculate</Heading1>
+
+<div>
+    <NavLink href="/easy" class="btn">Easy</NavLink>
+    <NavLink href="/medium" class="btn">Medium</NavLink>
+    <NavLink href="/hard" class="btn">Hard</NavLink>
+</div>
+
+
 @code{
-    
+    private void NavigateToEasy()
+    {
+        NavigationManager.NavigateTo("/easy");
+    }
+
+    private void NavigateToMedium()
+    {
+        NavigationManager.NavigateTo("/medium");
+    }
+
+    private void NavigateToHard()
+    {
+        NavigationManager.NavigateTo("/hard");
+    }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
 
     class RandomNumberGenerator
     {
@@ -72,5 +102,8 @@
 
         }
     }
-
+    private void GoToEasy(MouseEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
 }
