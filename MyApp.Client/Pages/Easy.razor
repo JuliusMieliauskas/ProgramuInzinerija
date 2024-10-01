@@ -1,4 +1,86 @@
 @page "/easy"
+@inject NavigationManager NavigationManager
 
-<h3>Easy Level</h3>
-<p>This is the Easy level page.</p>
+<PageTitle>Easy Option</PageTitle>
+
+<h3>Easy Quick Calculate</h3>
+
+@if (showResult)
+{
+    <div>
+        <h4>@(isCorrect ? "Correct!" : "Wrong Answer. The correct answer was " + correctAnswer)</h4>
+        <PrimaryButton @onclick="GenerateNewProblem">Try Again</PrimaryButton>
+    </div>
+}
+else
+{
+    <div>
+        <p>Solve the following problem:</p>
+        <p><strong>@number1 @operation @number2 = ?</strong></p>
+
+        <InputText @bind-Value="userAnswer" placeholder="Enter your answer here" />
+        <PrimaryButton @onclick="CheckAnswer">Submit</PrimaryButton>
+    </div>
+}
+
+@code {
+    private int number1;
+    private int number2;
+    private string operation;
+    private int correctAnswer;
+    private string userAnswer = string.Empty;
+    private bool showResult = false;
+    private bool isCorrect = false;
+
+    private RandomNumberGenerator randomGenerator = new RandomNumberGenerator();
+
+    protected override void OnInitialized()
+    {
+        GenerateNewProblem();
+    }
+
+    private void GenerateNewProblem()
+    {
+        showResult = false;
+        number1 = randomGenerator.GenerateNumber(1, 100);
+
+        if (new Random().Next(0, 2) == 0)
+        {
+            operation = "+";
+            number2 = randomGenerator.GenerateNumber(1, 100);
+            correctAnswer = number1 + number2;
+        }
+        else
+        {
+            operation = "-";
+            number2 = randomGenerator.GenerateNumber(1, number1);
+            correctAnswer = number1 - number2;
+        }
+
+        userAnswer = string.Empty;
+    }
+
+    private void CheckAnswer()
+    {
+        if (int.TryParse(userAnswer, out int parsedAnswer))
+        {
+            isCorrect = parsedAnswer == correctAnswer;
+        }
+        else
+        {
+            isCorrect = false;
+        }
+
+        showResult = true;
+    }
+    
+    private class RandomNumberGenerator
+    {
+        private Random _random = new Random();
+
+        public int GenerateNumber(int min, int max)
+        {
+            return _random.Next(min, max);
+        }
+    }
+}

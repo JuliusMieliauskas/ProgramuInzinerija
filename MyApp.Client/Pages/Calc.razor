@@ -6,11 +6,10 @@
 <Heading1>Quick Calculate</Heading1>
 
 <div>
-    <NavLink href="/easy" class="btn">Easy</NavLink>
-    <NavLink href="/medium" class="btn">Medium</NavLink>
-    <NavLink href="/hard" class="btn">Hard</NavLink>
+    <PrimaryButton @onclick="NavigateToEasy">Easy</PrimaryButton>
+    <PrimaryButton @onclick="NavigateToMedium">Medium</PrimaryButton>
+    <PrimaryButton @onclick="NavigateToHard">Hard</PrimaryButton>
 </div>
-
 
 @code{
     private void NavigateToEasy()
@@ -30,80 +29,4 @@
 
     [Inject]
     private NavigationManager NavigationManager { get; set; }
-
-    class RandomNumberGenerator
-    {
-        public int number;
-
-        public RandomNumberGenerator()
-        {
-            Random random = new Random();
-            number = random.Next(1, 100);
-        }
-    }
-
-    public class ChooseLevel
-    {
-        public string ChosenLevel { get; private set; }
-
-        public void AskForLevel()
-        {
-            Console.WriteLine("Choose a difficulty level: easy, medium, or hard.");
-            string input = Console.ReadLine().ToLower();
-
-            while (input != "easy" && input != "medium" && input != "hard")
-            {
-                Console.WriteLine("Invalid input. You need to type in 'easy', 'medium', or 'hard':");
-                input = Console.ReadLine().ToLower();
-            }
-
-            ChosenLevel = input;
-
-            ExecuteLevel();
-        }
-
-        private void ExecuteLevel()
-        {
-            switch (ChosenLevel)
-            {
-                case "easy":
-                    Console.WriteLine("You chose EASY. Let's start with simple addition and substraction.");
-                    // code
-                    break;
-
-                case "medium":
-                    Console.WriteLine("You chose MEDIUM. Let's add in some multiplication.");
-                    // code
-                    break;
-
-                case "hard":
-                    Console.WriteLine("You chose HARD. Let's add in some division.");
-                    // code
-                    break;
-            }
-        }
-    }
-
-
-
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            RandomNumberGenerator randomNumber1 = new RandomNumberGenerator();
-            Console.WriteLine("random Number 1: " + randomNumber1.number);
-
-            RandomNumberGenerator randomNumber2 = new RandomNumberGenerator();
-            Console.WriteLine("random Number 2: " + randomNumber2.number);
-
-            ChooseLevel levelChooser = new ChooseLevel();
-
-            levelChooser.AskForLevel();
-
-        }
-    }
-    private void GoToEasy(MouseEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
 }
