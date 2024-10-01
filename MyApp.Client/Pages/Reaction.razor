@@ -1,0 +1,90 @@
+@* @inherits Reaction *@
+@page "/reaction"
+@rendermode InteractiveAuto
+
+<PageTitle>Reaction</PageTitle>
+
+<Heading1 class = "text-center">Reaction Test Game</Heading1>
+<Heading3 class="text-center">Press the button when it says so</Heading3>
+<div class="items-center text-center">
+    @if (!inAction){
+        <PrimaryButton @onclick="TestKidou"
+            class="mx-auto font-bold ease-in duration-100">Start the test</PrimaryButton>
+    }
+    else{
+        @if(!springUp){
+            <PrimaryButton onclick="TestEarly"
+                class = "mx-auto font-bold">@commencingText</PrimaryButton>
+        }else{
+            <PrimaryButton onclick="TestFinsh"
+                class = "mx-auto font-bold bg-green">@commencingText</PrimaryButton>
+                @* <button onclick="TestFinish"
+                    class = "mx-auto font-bold bg-green">@commencingText</button> *@
+        }
+    }
+</div>
+<div>
+    Your Reaction time: @reactionTime
+    @* Time Passed: @timePassed
+    Time Spring: @reactionSpringUp *@
+</div>
+<PrimaryButton @onclick="SaveResults">Save Result</PrimaryButton>
+<div>
+@foreach(ReactionResult result in reactionResultList){
+    <p>Date:@result.date.  Time: @result.time</p>
+}
+</div>
+
+@code{
+    Random rand = new Random();
+    bool inAction = false;
+    bool springUp = false;
+    double timePassed = 0;
+    string commencingText = "Wait for the button.";
+    double reactionTime;
+    double reactionSpringUp = 3;
+    System.Timers.Timer reactionTimer = new System.Timers.Timer(50);
+    public class ReactionResult{
+        public double time;
+        public DateTime date;
+        public ReactionResult(double timeGiven){
+            time = timeGiven;
+            date = DateTime.Now;
+        }
+    }
+    List<ReactionResult> reactionResultList = new List<ReactionResult>();
+
+    void TestKidou(){
+        reactionSpringUp = rand.Next(2, 4);
+        reactionSpringUp += rand.NextDouble();
+        inAction = true;
+        commencingText = "Wait for the button.";
+        reactionTimer.Start();
+        reactionTimer.Elapsed += (sender, e) => {
+            timePassed += 0.05;
+            if (timePassed >= reactionSpringUp){
+                springUp = true;
+                commencingText = "Press!";
+            } 
+            InvokeAsync(StateHasChanged);
+        }; 
+    }
+    void TestEarly(){
+        commencingText = "Too early! Wait for the button.";
+        timePassed = 0;
+    }
+    void TestFinsh(){
+        reactionTimer.Dispose();
+        reactionTimer = new System.Timers.Timer(50);
+        reactionTime = timePassed - reactionSpringUp;
+        timePassed = 0;
+        springUp = false;
+        inAction = false;
+    }
+    void SaveResults(){
+        if (reactionTime != 0){
+            reactionResultList.Add(new ReactionResult(reactionTime));
+            reactionTime = 0;
+        }
+    }
+}
