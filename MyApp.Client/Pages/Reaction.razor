@@ -31,7 +31,7 @@
 <PrimaryButton @onclick="SaveResults">Save Result</PrimaryButton>
 <div>
 @foreach(ReactionResult result in reactionResultList){
-    <p>Date:@result.date.  Time: @result.time</p>
+    <p>Date:@result.date.  Time: @result.Time</p>
 }
 </div>
 
@@ -45,10 +45,10 @@
     double reactionSpringUp = 3;
     System.Timers.Timer reactionTimer = new System.Timers.Timer(50);
     public class ReactionResult{
-        public double time;
+        public double Time {get; set;}
         public DateTime date;
         public ReactionResult(double timeGiven){
-            time = timeGiven;
+            Time = timeGiven;
             date = DateTime.Now;
         }
     }
