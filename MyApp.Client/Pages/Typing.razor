@@ -1,0 +1,56 @@
+@page "/typing"
+@rendermode InteractiveAuto
+
+@using System.Timers
+
+<PageTitle>Typing</PageTitle>
+
+<div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-4">Speed Typing Game</h1>
+    
+    <div class="mb-4">
+        <p class="text-lg font-medium">Sample Text:</p>
+        <p class="text-xl bg-gray-100 p-2 rounded">@SampleText</p>
+    </div>
+    
+    <div class="mb-4">
+        <textarea @ref="textAreaReference"
+                  @bind="UserInput" 
+                  @bind:event="oninput" 
+                  @onkeydown="@HandleKeyDown"
+                  class="w-full p-2 border rounded"
+                  rows="3"
+                  placeholder="Start typing here..."
+                  disabled="@(!GameStarted)"></textarea>
+    </div>
+    
+    <div class="mb-4">
+        <p class="text-lg">Time Remaining: @TimeRemaining seconds</p>
+        <p class="text-lg">WPM: @WPM</p>
+        <p class="text-lg">Errors: @ErrorCount</p>
+    </div>
+    
+    @if (!GameStarted && TimeRemaining == 30)
+    {
+        <PrimaryButton @onclick="StartGame" class="bg-blue-500 text-white px-4 py-2 rounded">
+            Start Game
+        </PrimaryButton>
+    }
+    else if (GameStarted)
+    {
+        <p class="text-lg font-bold text-green-600">Game in progress...</p>
+    }
+    else
+    {
+        <div>
+            <p class="text-lg font-bold text-red-600">Game Over!</p>
+            <PrimaryButton @onclick="ResetGame" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">
+                Play Again
+            </PrimaryButton>
+        </div>
+    }
+</div>
+
+@code {
+    @inherits MyApp.Client.TypingBase
+}
