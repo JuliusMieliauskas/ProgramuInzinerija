@@ -58,6 +58,7 @@ public class ReactionBase : ComponentBase
 
             reactionTime = 0;
             await _httpClient.PostAsJsonAsync("api/reactiongameresults", result);
+            
         }
     }
 
