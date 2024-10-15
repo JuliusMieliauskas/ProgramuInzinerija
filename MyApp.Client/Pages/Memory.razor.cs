@@ -1,21 +1,7 @@
-@page "/memory"
-@* @rendermode InteracitveAuto *@
+using Microsoft.AspNetCore.Components;
 
-<h1>Memory</h1>
-
-<div class ="card-grid">
-    @foreach(var card in Cards)
-    {
-        <div class="card" @onclick="() => FlipCard(card.Id)">
-            <div class="card-front">
-                <span class="card-number" style="color: @card.Color">@card.Number</span>
-            </div>
-            <div class="card-back"></div>
-        </div>
-    }
-</div>
-
-@code{
+namespace MyApp.Client
+{
     private List<Card> Cards = new();
     private List<int> FlippedCards = new();
 
@@ -61,6 +47,6 @@
     {
         public int Id { get; set; }
         public int Number { get; set; }
-        public string Color { get; set; }
+        public string Color {get; set;}
     }
 }
