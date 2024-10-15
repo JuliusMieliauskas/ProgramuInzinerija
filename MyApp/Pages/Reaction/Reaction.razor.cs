@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-namespace MyApp.Pages;
+using System.Net.Http.Json;
+using System.Net.Http;
+using MyApp.Shared;
 
+namespace MyApp.Pages;
 public class ReactionBase : ComponentBase
 {
     Random rand = new Random();
@@ -12,15 +15,11 @@ public class ReactionBase : ComponentBase
     protected double reactionTime;
     protected double reactionSpringUp = 3;
     protected System.Timers.Timer reactionTimer = new System.Timers.Timer(50);
-    public class ReactionResult{
-        public double Time {get; set;}
-        public DateTime date;
-        public ReactionResult(double timeGiven){
-            Time = timeGiven;
-            date = DateTime.Now;
-        }
-    }
-    protected List<ReactionResult> reactionResultList = new List<ReactionResult>();
+    
+    [Inject]
+    private HttpClient _httpClient { get; set; }
+    
+    protected List<ReactionGameResult> reactionResultList = new List<ReactionGameResult>();
 
     protected void TestKidou(){
         reactionSpringUp = rand.Next(2, 4);
@@ -49,10 +48,16 @@ public class ReactionBase : ComponentBase
         springUp = false;
         inAction = false;
     }
-    protected void SaveResults(){
+    protected async void SaveResults(){
         if (reactionTime != 0){
-            reactionResultList.Add(new ReactionResult(reactionTime));
+            ReactionGameResult result = new ReactionGameResult
+            {
+                ReactionTime = reactionTime
+            };
+            // reactionResultList.Add(result);
+
             reactionTime = 0;
+            await _httpClient.PostAsJsonAsync("api/reactiongameresults", result);
         }
     }
 

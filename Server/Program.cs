@@ -11,6 +11,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseInMemoryDatabase("MyDatabase"));
 
 builder.Services.AddScoped<TypingGameResultRepository>(); // Register the repository
+builder.Services.AddScoped<ReactionGameResultStream>();
 
 builder.Services.AddCors(options =>
 {
