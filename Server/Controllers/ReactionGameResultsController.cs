@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyApp.Data;
 using MyApp.Shared;
-using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace MyApp.Server.Controllers;
@@ -12,28 +10,25 @@ namespace MyApp.Server.Controllers;
 [Route("api/[controller]")]
 public class ReactionGameResultsController : ControllerBase
 {
-    ReactionGameResultStream _stream;
-    public ReactionGameResultsController()
+    private readonly ReactionGameResultsRepository _repository;
+    private readonly ILogger<ReactionGameResultsController> _logger;
+
+    public ReactionGameResultsController(ReactionGameResultsRepository repository)
     {
-        _stream = new ReactionGameResultStream();
+        _repository = repository;
     }
-    // [HttpGet]
-    // public async Task<List<ReactionGameResult>> GetEvent()
-    // {
-    //     var results = await _stream.GetAllAsync();
-    //     return results;
-    // }
 
     [HttpGet]
-    public async Task<ActionResult<List<ReactionGameResult>>> Get()
+    public async Task<ActionResult<IEnumerable<ReactionGameResult>>> Get()
     {
-        
-        return Ok(await _stream.GetAllAsync());
+        var results = await _repository.GetAllAsync();
+        return Ok(results);
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post([FromBody] ReactionGameResult result){
-        await _stream.AddAsync(result);
+    public async Task<IActionResult> Post([FromBody] ReactionGameResult result)
+    {
+        await _repository.AddAsync(result);
         return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }
 }
