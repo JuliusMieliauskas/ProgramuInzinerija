@@ -1,0 +1,36 @@
+@* @inherits Reaction *@
+@page "/reaction"
+@inherits MyApp.Pages.ReactionBase
+
+<PageTitle>Reaction</PageTitle>
+
+<Heading1 class = "text-center">Reaction Test Game</Heading1>
+<Heading3 class="text-center">Press the button when it says so</Heading3>
+<div class="items-center text-center">
+    @if (!inAction){
+        <button @onclick="TestKidou"
+            class="mx-auto font-bold ease-in duration-100">Start the test</button>
+    }
+    else{
+        @if(!springUp){
+            <button @onclick="TestEarly"
+                class = "mx-auto font-bold">@commencingText</button>
+        }else{
+            <button @onclick="TestFinsh"
+                class = "mx-auto font-bold bg-green">@commencingText</button>
+                @* <button onclick="TestFinish"
+                    class = "mx-auto font-bold bg-green">@commencingText</button> *@
+        }
+    }
+</div>
+<div>
+    Your Reaction time: @reactionTime
+    @* Time Passed: @timePassed
+    Time Spring: @reactionSpringUp *@
+</div>
+<button @onclick="SaveResults">Save Result</button>
+@* <div>
+@foreach(ReactionResult result in reactionResultList){
+    <p>Date:@result.date.  Time: @result.Time</p>
+}
+</div> *@
