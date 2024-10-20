@@ -3,28 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using MyApp.Data;
+using MyApp.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("MyDatabase"));
-
-builder.Services.AddScoped<TypingGameResultRepository>(); // Register the repository
-builder.Services.AddScoped<ReactionGameResultsRepository>();
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAllOrigins",
-        builder =>
-        {
-            builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
-        });
-});
-
-builder.Services.AddControllers();
+builder.Services.AddCustomServices(); // Use the extension method to add all services
 
 var app = builder.Build();
 
