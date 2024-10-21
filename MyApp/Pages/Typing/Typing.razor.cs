@@ -10,7 +10,7 @@ namespace MyApp.Pages;
 
 public class TypingBase : ComponentBase
     {
-        protected string SampleText = "The quick brown fox jumps over the lazy dog. This is a sample text for the speed typing game. Try to type it as fast and accurately as you can within the given time limit.";
+        protected string SampleText = "Breakfast procuring nay end happiness allowance assurance frankness. Met simplicity nor difficulty unreserved who. Entreaties mr conviction dissimilar me astonished estimating cultivated. On no applauded exquisite my additions. Pronounce add boy estimable nay suspected. You sudden nay elinor thirty esteem temper. Quiet leave shy you gay off asked large style. Oh to talking improve produce in limited offices fifteen an. Wicket branch to answer do we. Place are decay men hours tiled. If or of ye throwing friendly required. Marianne interest in exertion as. Offering my branched confined oh dashwood.";
         protected string UserInput = "";
         protected System.Timers.Timer GameTimer;
         protected int TimeRemaining = 30;
@@ -59,14 +59,6 @@ public class TypingBase : ComponentBase
             GameStarted = false;
             CalculateWPM();
             SaveTypingGameResultsAsync();
-        }
-
-        protected void ResetGame()
-        {
-            UserInput = "";
-            TimeRemaining = 10;
-            WPM = 0;
-            ErrorCount = 0;
         }
 
         protected void HandleKeyDown(KeyboardEventArgs e)

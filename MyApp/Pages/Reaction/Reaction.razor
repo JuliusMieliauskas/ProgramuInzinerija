@@ -1,36 +1,45 @@
-@* @inherits Reaction *@
 @page "/reaction"
 @inherits MyApp.Pages.ReactionBase
 
 <PageTitle>Reaction</PageTitle>
 
-<Heading1 class = "text-center">Reaction Test Game</Heading1>
-<Heading3 class="text-center">Press the button when it says so</Heading3>
-<div class="items-center text-center">
-    @if (!inAction){
+<h1 style="text-align: center; font-size: 2rem; font-weight: bold;">Reaction Test Game</h1>
+<h3 style="text-align: center; font-size: 1.25rem;">Press the button when it says so</h3>
+
+<div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    @if (!inAction)
+    {
         <button @onclick="TestKidou"
-            class="mx-auto font-bold ease-in duration-100">Start the test</button>
+                style="margin: 16px auto; font-weight: bold; transition: all 0.1s ease-in; padding: 8px 16px; background-color: #3b82f6; color: white; border-radius: 8px;">
+            Start the test
+        </button>
     }
-    else{
-        @if(!springUp){
+    else
+    {
+        @if (!springUp)
+        {
             <button @onclick="TestEarly"
-                class = "mx-auto font-bold">@commencingText</button>
-        }else{
+                    style="margin: 16px auto; font-weight: bold; padding: 8px 16px; background-color: #f87171; color: white; border-radius: 8px;">
+                @commencingText
+            </button>
+        }
+        else
+        {
             <button @onclick="TestFinsh"
-                class = "mx-auto font-bold bg-green">@commencingText</button>
-                @* <button onclick="TestFinish"
-                    class = "mx-auto font-bold bg-green">@commencingText</button> *@
+                    style="margin: 16px auto; font-weight: bold; padding: 8px 16px; background-color: #10b981; color: white; border-radius: 8px;">
+                @commencingText
+            </button>
         }
     }
 </div>
-<div>
-    Your Reaction time: @reactionTime
-    @* Time Passed: @timePassed
-    Time Spring: @reactionSpringUp *@
+
+<div style="text-align: center; margin-top: 16px;">
+    <p>Your Reaction time: @reactionTime</p>
 </div>
-<button @onclick="SaveResults">Save Result</button>
-@* <div>
-@foreach(ReactionResult result in reactionResultList){
-    <p>Date:@result.date.  Time: @result.Time</p>
-}
-</div> *@
+
+<div style="text-align: center; margin-top: 16px;">
+    <button @onclick="SaveResults"
+            style="font-weight: bold; padding: 8px 16px; background-color: #3b82f6; color: white; border-radius: 8px;">
+        Save Result
+    </button>
+</div>

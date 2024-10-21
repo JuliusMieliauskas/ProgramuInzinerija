@@ -1,0 +1,53 @@
+@page "/leaderboard"
+@inherits MyApp.Pages.LeaderboardBase
+
+<div style="position: relative; display: flex; flex-direction: column;">
+    <br/>
+
+    <h1>Leaderboard</h1>
+    <br/>
+
+    <h3>Typing Game Results</h3>
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid black; padding: 8px;">ID</th>
+                <th style="border: 1px solid black; padding: 8px;">Words Per Minute</th>
+                <th style="border: 1px solid black; padding: 8px;">Errors</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var result in TypingGameResults)
+            {
+                <tr>
+                    <td style="border: 1px solid black; padding: 8px;">@result.Id</td>
+                    <td style="border: 1px solid black; padding: 8px;">@result.WordsPerMinute</td>
+                    <td style="border: 1px solid black; padding: 8px;">@result.Errors</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <br />
+
+    <h3>Reaction Game Results</h3>
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th style="border: 1px solid black; padding: 8px;">ID</th>
+                <th style="border: 1px solid black; padding: 8px;">Reaction Time</th>
+                <th style="border: 1px solid black; padding: 8px;">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var result in ReactionGameResults)
+            {
+                <tr>
+                    <td style="border: 1px solid black; padding: 8px;">@result.Id</td>
+                    <td style="border: 1px solid black; padding: 8px;">@result.ReactionTime</td>
+                    <td style="border: 1px solid black; padding: 8px;">@result.Date</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
