@@ -4,46 +4,46 @@
 
 <PageTitle>Typing</PageTitle>
 
-<div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-4">Speed Typing Game</h1>
+<div style="max-width: 800px; margin: 0 auto; padding: 16px;">
+    <h1 style="font-size: 1.875rem; font-weight: bold; margin-bottom: 16px;">Speed Typing Game</h1>
     
-    <div class="mb-4">
-        <p class="text-lg font-medium">Sample Text:</p>
-        <p class="text-xl bg-gray-100 p-2 rounded">@SampleText</p>
+    <div style="margin-bottom: 16px;">
+        <p style="font-size: 1.125rem; font-weight: 500;">Sample Text:</p>
+        <p style="font-size: 1.25rem; background-color: #f7fafc; padding: 8px; border-radius: 8px;">@SampleText</p>
     </div>
     
-    <div class="mb-4">
+    <div style="margin-bottom: 16px;">
         <textarea @ref="textAreaReference"
                   @bind="UserInput" 
                   @bind:event="oninput" 
                   @onkeydown="@HandleKeyDown"
-                  class="w-full p-2 border rounded"
+                  style="width: 100%; padding: 8px; border: 1px solid #e2e8f0; border-radius: 8px;"
                   rows="3"
                   placeholder="Start typing here..."
                   disabled="@(!GameStarted)"></textarea>
     </div>
     
-    <div class="mb-4">
-        <p class="text-lg">Time Remaining: @TimeRemaining seconds</p>
-        <p class="text-lg">WPM: @WPM</p>
-        <p class="text-lg">Errors: @ErrorCount</p>
+    <div style="margin-bottom: 16px;">
+        <p style="font-size: 1.125rem;">Time Remaining: @TimeRemaining seconds</p>
+        <p style="font-size: 1.125rem;">WPM: @WPM</p>
+        <p style="font-size: 1.125rem; color: red;">Errors: @ErrorCount</p>
     </div>
     
     @if (!GameStarted && TimeRemaining == 30)
     {
-        <button @onclick="StartGame" class="bg-blue-500 text-white px-4 py-2 rounded">
+        <button @onclick="StartGame" style="background-color: #3b82f6; color: white; padding: 8px 16px; border-radius: 8px;">
             Start Game
         </button>
     }
     else if (GameStarted)
     {
-        <p class="text-lg font-bold text-green-600">Game in progress...</p>
+        <p style="font-size: 1.125rem; font-weight: bold; color: #16a34a;">Game in progress...</p>
     }
     else
     {
         <div>
-            <p class="text-lg font-bold text-red-600">Game Over!</p>
-            <button @onclick="ResetGame" class="bg-blue-500 text-white px-4 py-2 rounded mt-2">
+            <p style="font-size: 1.125rem; font-weight: bold; color: #dc2626;">Game Over!</p>
+            <button @onclick="StartGame" style="background-color: #3b82f6; color: white; padding: 8px 16px; border-radius: 8px; margin-top: 8px;">
                 Play Again
             </button>
         </div>
