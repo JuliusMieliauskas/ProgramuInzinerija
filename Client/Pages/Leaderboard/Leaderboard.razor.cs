@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using MyApp.Shared;
+using Shared;
 using System.Net.Http.Json;
 using System.Net.Http;
 
-namespace MyApp.Pages;
+namespace Client.Pages;
 
 public class LeaderboardBase : ComponentBase {
     [Inject]

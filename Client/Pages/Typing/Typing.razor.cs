@@ -1,12 +1,12 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System.Timers;
-using MyApp.Shared;
+using Shared;
 using System.Net.Http.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace MyApp.Pages;
+namespace Client.Pages;
 
 public class TypingBase : ComponentBase
     {

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MyApp.Shared;
+namespace Shared;
 
 public class TypingGameResult
 {

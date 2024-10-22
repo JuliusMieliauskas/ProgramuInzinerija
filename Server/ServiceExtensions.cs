@@ -1,8 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Data;
+using Data;
 
-namespace MyApp.Extensions;
+namespace Extensions;
 
 public static class ServiceExtensions
 {

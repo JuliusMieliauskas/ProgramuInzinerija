@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using MyApp.Data;
-using MyApp.Shared;
+using Data;
+using Shared;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace MyApp.Server.Controllers;
+namespace Server.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

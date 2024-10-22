@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System.Net.Http.Json;
 using System.Net.Http;
-using MyApp.Shared;
+using Shared;
 
-namespace MyApp.Pages;
+namespace Client.Pages;
 public class ReactionBase : ComponentBase
 {
     Random rand = new Random();

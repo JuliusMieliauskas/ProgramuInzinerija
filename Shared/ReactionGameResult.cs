@@ -1,4 +1,4 @@
-namespace MyApp.Shared;
+namespace Shared;
 
 public class ReactionGameResult
 {
