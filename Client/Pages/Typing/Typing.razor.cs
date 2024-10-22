@@ -92,8 +92,10 @@ public class TypingBase : ComponentBase
             var result = new TypingGameResult
             {
                 WordsPerMinute = WPM,
-                Errors = ErrorCount
+                Errors = ErrorCount,
+                Status = (ErrorCount == 0 ? TypingGameStatus.PerfectRun : TypingGameStatus.NotPerfectRun)
             };
+            
             Logger.LogInformation("Saving typing game results: {WPM} WPM, {Errors} errors", WPM, ErrorCount);
 
             await _httpClient.PostAsJsonAsync("api/typinggameresults", result);
