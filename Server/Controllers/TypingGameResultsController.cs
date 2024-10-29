@@ -20,22 +20,16 @@ public class TypingGameResultsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TypingGameResult>>> Get()
+    public async Task<ActionResult<IEnumerable<TypingGameResult>>> Get([FromQuery] bool sorted = false)
     {
-        _logger.LogInformation("Getting all typing game results");
+        _logger.LogInformation("Getting all typing game results sorted by WPM to Errors ratio");
         var results = await _repository.GetAllAsync();
-        return Ok(results);
-    }
-
-    [HttpGet("{id}")]
-    public async Task<ActionResult<TypingGameResult>> Get(int id)
-    {
-        var result = await _repository.GetByIdAsync(id);
-        if (result == null)
+        if (sorted)
         {
-            return NotFound();
+            _logger.LogInformation("Sorting typing game results by WPM to Errors ratio");
+            results = results.OrderByDescending(result => result).ToList();
         }
-        return Ok(result);
+        return Ok(results);
     }
 
     [HttpPost]
@@ -44,24 +38,5 @@ public class TypingGameResultsController : ControllerBase
         _logger.LogInformation("Creating a new typing game result");
         await _repository.AddAsync(result);
         return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
-    }
-
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Put(int id, [FromBody] TypingGameResult result)
-    {
-        if (id != result.Id)
-        {
-            return BadRequest();
-        }
-
-        await _repository.UpdateAsync(result);
-        return NoContent();
-    }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-        await _repository.DeleteAsync(id);
-        return NoContent();
     }
 }

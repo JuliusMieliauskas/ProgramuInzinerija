@@ -21,10 +21,10 @@ public class LeaderboardBase : ComponentBase {
     private async Task LoadGameResults()
     {
         // Fetch Typing Game Results
-        var typingResults = await HttpClient.GetFromJsonAsync<List<TypingGameResult>>("api/typinggameresults");
+        var typingResults = await HttpClient.GetFromJsonAsync<List<TypingGameResult>>("api/typinggameresults?sorted=true");
         if (typingResults != null)
         {
-            TypingGameResults = typingResults.OrderByDescending(result => result.WordsPerMinute).ToList();
+            TypingGameResults = typingResults;
         }
 
         // Fetch Reaction Game Results
