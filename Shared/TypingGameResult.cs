@@ -14,7 +14,7 @@ public class TypingGameResult : IComparable<TypingGameResult>
 
     public TypingGameResult() { }
 
-    public TypingGameResult(int id, int wordsPerMinute, int errors = 0, TypingGameStatus? status = null)
+    public TypingGameResult(int wordsPerMinute, int errors = 0, TypingGameStatus? status = null, int id = 0)
     {
         Id = id;
         WordsPerMinute = wordsPerMinute;
