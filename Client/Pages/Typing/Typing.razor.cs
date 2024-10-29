@@ -10,7 +10,7 @@ namespace Client.Pages;
 
 public class TypingBase : ComponentBase
     {
-        protected string SampleText = "Breakfast procuring nay end happiness allowance assurance frankness. Met simplicity nor difficulty unreserved who. Entreaties mr conviction dissimilar me astonished estimating cultivated. On no applauded exquisite my additions. Pronounce add boy estimable nay suspected. You sudden nay elinor thirty esteem temper. Quiet leave shy you gay off asked large style. Oh to talking improve produce in limited offices fifteen an. Wicket branch to answer do we. Place are decay men hours tiled. If or of ye throwing friendly required. Marianne interest in exertion as. Offering my branched confined oh dashwood.";
+        protected string SampleText = "";
         protected string UserInput = "";
         protected System.Timers.Timer GameTimer;
         protected int TimeRemaining = 30;
@@ -25,8 +25,19 @@ public class TypingBase : ComponentBase
         [Inject]
         private ILogger<TypingBase> Logger { get; set; }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            try
+            {
+                Logger.LogInformation("Fetching sample text from server.");
+                SampleText = await _httpClient.GetStringAsync("api/sampletext/sample-text");
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Failed to fetch sample text.");
+                SampleText = "Error loading text.";
+            }
+
             GameTimer = new System.Timers.Timer(1000);
             GameTimer.Elapsed += (sender, e) => 
             {
