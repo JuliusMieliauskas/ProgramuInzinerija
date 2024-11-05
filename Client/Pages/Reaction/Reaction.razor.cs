@@ -50,8 +50,8 @@ public class ReactionBase : ComponentBase
     }
     protected async void SaveResults(){
         if (reactionTime != 0){
-            ReactionGameResult result = new ReactionGameResult(reactionTime: reactionTime)
-            // reactionResultList.Add(result);
+            ReactionGameResult result = new ReactionGameResult(reactionTime: (int) reactionTime);
+            reactionResultList.Add(result);
 
             reactionTime = 0;
             await _httpClient.PostAsJsonAsync("api/reactiongameresults", result);
