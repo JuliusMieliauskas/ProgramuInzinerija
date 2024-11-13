@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Data;
+using Shared;
 
 namespace Extensions;
 
@@ -12,8 +13,8 @@ public static class ServiceExtensions
         services.AddDbContext<AppDbContext>(options =>
             options.UseInMemoryDatabase("MyDatabase"));
 
-        services.AddScoped<TypingGameResultRepository>();
-        services.AddScoped<ReactionGameResultsRepository>();
+        services.AddScoped<IRepository<ReactionGameResult>, ReactionGameResultsRepository>();
+        services.AddScoped<IRepository<TypingGameResult>, TypingGameResultRepository>();
 
         services.AddCors(options =>
         {
