@@ -10,12 +10,13 @@ namespace Server.Controllers;
 [Route("api/[controller]")]
 public class ReactionGameResultsController : ControllerBase
 {
-    private readonly ReactionGameResultsRepository _repository;
+    private readonly IRepository<ReactionGameResult> _repository;
     private readonly ILogger<ReactionGameResultsController> _logger;
 
-    public ReactionGameResultsController(ReactionGameResultsRepository repository)
+    public ReactionGameResultsController(IRepository<ReactionGameResult> repository, ILogger<ReactionGameResultsController> logger)
     {
         _repository = repository;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -28,6 +29,8 @@ public class ReactionGameResultsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] ReactionGameResult result)
     {
+        _logger.LogInformation("Received result");
+        _logger.LogInformation($"Adding result: {result.ReactionTime}");
         await _repository.AddAsync(result);
         return CreatedAtAction(nameof(Get), new { id = result.Id }, result);
     }

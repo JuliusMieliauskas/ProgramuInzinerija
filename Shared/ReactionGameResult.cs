@@ -10,7 +10,7 @@ public class ReactionGameResult
         Date = DateTime.Now;
     }
 
-    public ReactionGameResult(int reactionTime, int id = 0)
+    public ReactionGameResult(double reactionTime, int id = 0)
     {
         Id = id;
         ReactionTime = reactionTime;

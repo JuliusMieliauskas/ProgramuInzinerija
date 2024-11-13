@@ -10,10 +10,10 @@ namespace Server.Controllers;
 [Route("api/[controller]")]
 public class TypingGameResultsController : ControllerBase
 {
-    private readonly TypingGameResultRepository _repository;
+    private readonly IRepository<TypingGameResult> _repository;
     private readonly ILogger<TypingGameResultsController> _logger;
 
-    public TypingGameResultsController(TypingGameResultRepository repository, ILogger<TypingGameResultsController> logger)
+    public TypingGameResultsController(IRepository<TypingGameResult> repository, ILogger<TypingGameResultsController> logger)
     {
         _repository = repository;
         _logger = logger;

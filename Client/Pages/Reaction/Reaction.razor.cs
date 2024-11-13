@@ -50,7 +50,7 @@ public class ReactionBase : ComponentBase
     }
     protected async void SaveResults(){
         if (reactionTime != 0){
-            ReactionGameResult result = new ReactionGameResult(reactionTime: (int) reactionTime);
+            ReactionGameResult result = new ReactionGameResult(reactionTime: reactionTime);
             reactionResultList.Add(result);
 
             reactionTime = 0;

@@ -5,8 +5,7 @@ using Shared;
 
 namespace Data;
 
-public class ReactionGameResultsRepository
-{
+public class ReactionGameResultsRepository : IRepository<ReactionGameResult> {
     private readonly AppDbContext _context;
 
     public ReactionGameResultsRepository(AppDbContext context)

@@ -5,8 +5,7 @@ using Shared;
 
 namespace Data;
 
-public class TypingGameResultRepository
-{
+public class TypingGameResultRepository : IRepository<TypingGameResult> {
     private readonly AppDbContext _context;
 
     public TypingGameResultRepository(AppDbContext context)
@@ -19,30 +18,9 @@ public class TypingGameResultRepository
         return await _context.TypingGameResults.ToListAsync();
     }
 
-    public async Task<TypingGameResult> GetByIdAsync(int id)
-    {
-        return await _context.TypingGameResults.FindAsync(id);
-    }
-
     public async Task AddAsync(TypingGameResult result)
     {
         _context.TypingGameResults.Add(result);
         await _context.SaveChangesAsync();
-    }
-
-    public async Task UpdateAsync(TypingGameResult result)
-    {
-        _context.Entry(result).State = EntityState.Modified;
-        await _context.SaveChangesAsync();
-    }
-
-    public async Task DeleteAsync(int id)
-    {
-        var result = await _context.TypingGameResults.FindAsync(id);
-        if (result != null)
-        {
-            _context.TypingGameResults.Remove(result);
-            await _context.SaveChangesAsync();
-        }
     }
 }
