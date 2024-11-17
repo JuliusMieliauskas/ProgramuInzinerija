@@ -10,14 +10,14 @@ namespace Client.Pages;
 
 public class TypingBase : ComponentBase
     {
-        protected string SampleText = "";
-        protected string UserInput = "";
-        protected System.Timers.Timer GameTimer;
-        protected int TimeRemaining = 30;
-        protected int WPM = 0;
-        protected int ErrorCount = 0;
-        protected bool GameStarted = false;
-        protected ElementReference textAreaReference;
+        public string SampleText = "";
+        public string UserInput = "";
+        public System.Timers.Timer GameTimer;
+        public int TimeRemaining = 30;
+        public int WPM = 0;
+        public int ErrorCount = 0;
+        public bool GameStarted = false;
+        public ElementReference textAreaReference;
         
         [Inject]
         private HttpClient _httpClient { get; set; }
@@ -51,7 +51,7 @@ public class TypingBase : ComponentBase
             };
         }
 
-        protected async Task StartGame()
+        public async Task StartGame()
         {
             UserInput = "";
             TimeRemaining = 10;
@@ -64,7 +64,7 @@ public class TypingBase : ComponentBase
             await textAreaReference.FocusAsync();
         }
 
-        protected void EndGame()
+        public void EndGame()
         {
             GameTimer.Stop();
             GameStarted = false;
@@ -72,7 +72,7 @@ public class TypingBase : ComponentBase
             SaveTypingGameResultsAsync();
         }
 
-        protected void HandleKeyDown(KeyboardEventArgs e)
+        public void HandleKeyDown(KeyboardEventArgs e)
         {
             if (!GameStarted)
             {
@@ -82,7 +82,7 @@ public class TypingBase : ComponentBase
             CalculateWPM();
         }
 
-        protected void CalculateWPM()
+        public void CalculateWPM()
         {
             int totalCharacters = UserInput.Length;
             double minutes = (30 - TimeRemaining) / 60.0;
@@ -98,7 +98,7 @@ public class TypingBase : ComponentBase
                 .Count();
         }
 
-        private async Task SaveTypingGameResultsAsync()
+        public async Task SaveTypingGameResultsAsync()
         {
             var result = new TypingGameResult
             {

@@ -5,7 +5,7 @@ public class ReactionGameTests
     private readonly ReactionBase _reactionClass = new ReactionBase();
 
     [Fact]
-    public async Task TestStart_SetsInitialValuesCorrectly()
+    public void TestStart_SetsInitialValuesCorrectly()
     {
         _reactionClass.TestStart();
 
@@ -21,7 +21,7 @@ public class ReactionGameTests
         double elapsedTime = 0;
         while (elapsedTime < _reactionClass.reactionSpringUp)
         {
-            await Task.Delay(50); // Simulate waiting for timer events
+            await Task.Delay(50);
             elapsedTime += 0.05;
         }
 
