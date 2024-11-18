@@ -17,7 +17,7 @@ public class ReactionBase : ComponentBase
     public System.Timers.Timer reactionTimer = new System.Timers.Timer(50);
     
     [Inject]
-    private HttpClient _httpClient { get; set; }
+    private HttpClient? _httpClient { get; set; }
     
     public List<ReactionGameResult> reactionResultList = new List<ReactionGameResult>();
 
@@ -49,6 +49,7 @@ public class ReactionBase : ComponentBase
         inAction = false;
     }
     public async void SaveResults(){
+        if (_httpClient == null) throw new ClientNullException();
         if (reactionTime != 0){
             ReactionGameResult result = new ReactionGameResult(reactionTime: reactionTime);
             reactionResultList.Add(result);

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System.Timers;
 using Shared;
+using System;
 using System.Net.Http.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -20,13 +21,21 @@ public class TypingBase : ComponentBase
         public ElementReference textAreaReference;
         
         [Inject]
-        private HttpClient _httpClient { get; set; }
+        private HttpClient? _httpClient { get; set; }
 
         [Inject]
-        private ILogger<TypingBase> Logger { get; set; }
+        private ILogger<TypingBase>? Logger { get; set; }
+
+    
 
         protected override async Task OnInitializedAsync()
         {
+            if (Logger == null){
+                throw new NullReferenceException();
+            }
+            if (_httpClient == null){
+                throw new ClientNullException();
+            }
             try
             {
                 Logger.LogInformation("Fetching sample text from server.");
@@ -39,15 +48,15 @@ public class TypingBase : ComponentBase
             }
 
             GameTimer = new System.Timers.Timer(1000);
-            GameTimer.Elapsed += (sender, e) => 
+            GameTimer.Elapsed += async (sender, e) => 
             {
                 TimeRemaining--;
                 if (TimeRemaining <= 0)
                 {
-                    EndGame();
+                    await EndGame();
                 }
                 CalculateWPM();
-                InvokeAsync(StateHasChanged);
+                await InvokeAsync(StateHasChanged);
             };
         }
 
@@ -64,12 +73,12 @@ public class TypingBase : ComponentBase
             await textAreaReference.FocusAsync();
         }
 
-        public void EndGame()
+        public async Task EndGame()
         {
             GameTimer.Stop();
             GameStarted = false;
             CalculateWPM();
-            SaveTypingGameResultsAsync();
+            await SaveTypingGameResultsAsync();
         }
 
         public void HandleKeyDown(KeyboardEventArgs e)
@@ -100,6 +109,8 @@ public class TypingBase : ComponentBase
 
         public async Task SaveTypingGameResultsAsync()
         {
+            if (Logger == null) throw new NullReferenceException();
+            if (_httpClient == null) throw new ClientNullException();
             var result = new TypingGameResult
             {
                 WordsPerMinute = WPM,
