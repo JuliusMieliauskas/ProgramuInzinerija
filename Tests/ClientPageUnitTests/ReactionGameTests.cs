@@ -59,9 +59,4 @@ public class ReactionGameTests
 
         Assert.False(_reactionClass.inAction);
     }
-    [Fact (Skip = "not implemented")]
-    public void reaction_testName()
-    {
-        throw new NotImplementedException();
-    }
 }
