@@ -8,11 +8,11 @@ namespace Client.Pages;
 
 public class LeaderboardBase : ComponentBase {
     [Inject]
-    private HttpClient HttpClient { get; set; }
+    private HttpClient? _httpClient { get; set; }
 
     protected List<TypingGameResult> TypingGameResults { get; set; } = new List<TypingGameResult>();
     protected List<ReactionGameResult> ReactionGameResults { get; set; } = new List<ReactionGameResult>();
-
+    
     protected override async Task OnInitializedAsync()
     {
         await LoadGameResults();
@@ -20,15 +20,17 @@ public class LeaderboardBase : ComponentBase {
     
     private async Task LoadGameResults()
     {
+        if (_httpClient == null) throw new ClientNullException("HttpClient is null.");
+
         // Fetch Typing Game Results
-        var typingResults = await HttpClient.GetFromJsonAsync<List<TypingGameResult>>("api/typinggameresults?sorted=true");
+        var typingResults = await _httpClient.GetFromJsonAsync<List<TypingGameResult>>("api/typinggameresults?sorted=true");
         if (typingResults != null)
         {
             TypingGameResults = typingResults;
         }
 
         // Fetch Reaction Game Results
-        var reactionResults = await HttpClient.GetFromJsonAsync<List<ReactionGameResult>>("api/reactiongameresults");
+        var reactionResults = await _httpClient.GetFromJsonAsync<List<ReactionGameResult>>("api/reactiongameresults");
         if (reactionResults != null)
         {
             ReactionGameResults = reactionResults.OrderBy(result => result.ReactionTime).ToList();

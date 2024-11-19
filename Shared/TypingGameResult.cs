@@ -22,7 +22,7 @@ public class TypingGameResult : IComparable<TypingGameResult>
         Status = status ?? (errors == 0 ? TypingGameStatus.PerfectRun : TypingGameStatus.NotPerfectRun);
     }
 
-    public int CompareTo(TypingGameResult other)
+    public int CompareTo(TypingGameResult? other)
     {
         if (other == null) return 1;
 
