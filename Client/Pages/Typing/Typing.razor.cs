@@ -21,10 +21,10 @@ public class TypingBase : ComponentBase
         public ElementReference textAreaReference;
         
         [Inject]
-        private HttpClient? _httpClient { get; set; }
+        protected HttpClient? _httpClient { get; set; }
 
         [Inject]
-        private ILogger<TypingBase>? Logger { get; set; }
+        protected ILogger<TypingBase>? Logger { get; set; }
 
     
 
@@ -34,7 +34,7 @@ public class TypingBase : ComponentBase
                 throw new NullReferenceException();
             }
             if (_httpClient == null){
-                throw new ClientNullException();
+                throw new ClientNullException("_httpClient is null!");
             }
             try
             {
