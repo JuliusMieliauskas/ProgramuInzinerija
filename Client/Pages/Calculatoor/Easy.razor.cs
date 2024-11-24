@@ -16,6 +16,8 @@ namespace Client.Pages
         protected string userAnswer = string.Empty;
         protected bool showResult = false;
         protected bool isCorrect = false;
+        protected int totalRounds = 0;
+        protected int correctAnswers = 0;
 
         private Random random = new Random();
 
@@ -52,6 +54,8 @@ namespace Client.Pages
 
         protected async void CheckAnswer()
         {
+            totalRounds++;
+
             if (int.TryParse(userAnswer, out int parsedAnswer))
             {
                 isCorrect = parsedAnswer == correctAnswer;
@@ -63,26 +67,27 @@ namespace Client.Pages
 
             showResult = true;
 
-            if (isCorrect)
+            if (totalRounds >= 10)
             {
-                await SubmitResult(10);
+                await SubmitResult();
             }
-            else
-            {
-                await SubmitResult(0);
-            }
+
         }
 
-        protected async Task SubmitResult(int score)
+        protected async Task SubmitResult()
         {
             var result = new CalcGameResult
             {
                 Difficulty = "Easy",
-                Score = score,
-                Date = DateTime.Now
+                CorrectAnswers = correctAnswers,
+                TotalRounds = totalRounds,
             };
 
             await HttpClient.PostAsJsonAsync("api/calcgameresults", result);
+
+            totalRounds = 0;
+            correctAnswers = 0;
+            GenerateNewProblem();
         }
 
     }

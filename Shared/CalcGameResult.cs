@@ -4,8 +4,8 @@ namespace Shared
     {
         public int Id { get; set; }
         public required string Difficulty { get; set; }
-        public int Score { get; set; }
-        public DateTime Date { get; set; }
+        public int CorrectAnswers { get; set; }
+        public int TotalRounds { get; set; }
     }
 }
 

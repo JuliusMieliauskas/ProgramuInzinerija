@@ -12,7 +12,11 @@ public class CalcGameResultsController : ControllerBase
     [HttpGet]
     public ActionResult<List<CalcGameResult>> GetResults()
     {
-        return Ok(CalcGameResults.OrderByDescending(result => result.Score).ToList());
+        var sortedResults = CalcGameResults
+            .OrderByDescending(result => result.CorrectAnswers)
+            .ThenByDescending(result => result.TotalRounds)
+            .ToList();
+        return Ok(sortedResults);
     }
 
     [HttpPost]
