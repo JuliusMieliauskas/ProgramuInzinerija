@@ -1,0 +1,14 @@
+@page "/calc"
+@inherits Client.Pages.CalcBase
+
+<PageTitle>Quick Calculate</PageTitle>
+
+<h1 style="text-align: center; font-size: 2rem; font-weight: bold;">Quick Calculation Game</h1>
+<h3 style="text-align: center; font-size: 1.25rem;">Choose your difficulty level</h3>
+
+<div style="display: flex; justify-content: center; gap: 8px; margin-top: 16px;">
+    <button @onclick="NavigateToEasy"
+            style="padding: 8px 16px; background-color: #3b82f6; color: white; font-weight: bold; border-radius: 8px;">
+        Easy
+    </button>
+</div>

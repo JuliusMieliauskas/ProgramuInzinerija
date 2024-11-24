@@ -12,7 +12,7 @@ public class LeaderboardBase : ComponentBase {
 
     protected List<TypingGameResult> TypingGameResults { get; set; } = new List<TypingGameResult>();
     protected List<ReactionGameResult> ReactionGameResults { get; set; } = new List<ReactionGameResult>();
-    
+    protected List<CalcGameResult> CalcGameResults { get; set; } = new List<CalcGameResult>();
     protected override async Task OnInitializedAsync()
     {
         await LoadGameResults();
@@ -34,6 +34,13 @@ public class LeaderboardBase : ComponentBase {
         if (reactionResults != null)
         {
             ReactionGameResults = reactionResults.OrderBy(result => result.ReactionTime).ToList();
+        }
+
+        // Fetch Calc Game Results
+        var calcResults = await HttpClient.GetFromJsonAsync<List<CalcGameResult>>("api/calcgameresults");
+        if (calcResults != null)
+        {
+            CalcGameResults = calcResults;
         }
     }
 }
