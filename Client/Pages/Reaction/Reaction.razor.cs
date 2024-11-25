@@ -49,7 +49,14 @@ public class ReactionBase : ComponentBase
         inAction = false;
     }
     public async void SaveResults(){
-        if (_httpClient == null) throw new ClientNullException();
+        try
+        {
+            if (_httpClient == null) throw new ClientNullException();
+        }
+        catch(ClientNullException){
+            commencingText = "Server Error, results cannot be saved!";
+            return;
+        }
         if (reactionTime != 0){
             ReactionGameResult result = new ReactionGameResult(reactionTime: reactionTime);
             reactionResultList.Add(result);

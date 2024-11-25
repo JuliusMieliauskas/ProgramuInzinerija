@@ -22,6 +22,8 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  
+
   <ItemGroup>
     <ProjectReference Include="..\Client\MyApp.csproj" />
     <ProjectReference Include="..\Server\server.csproj" />

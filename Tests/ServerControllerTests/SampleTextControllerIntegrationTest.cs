@@ -5,6 +5,7 @@ using System.Text;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Server.Controllers;
 using System.Text.Json.Nodes;
 using Newtonsoft.Json;
 using Shared;
@@ -27,7 +28,7 @@ public class SampleTextControllerIntegrationTest : IClassFixture<WebApplicationF
             AllowAutoRedirect = false
         });
     }
-    [Fact (Skip = "Bugged, the simulated client poorly handles the file reading in \"SampleTextController.cs\"")]
+    [Fact]
     public async Task Get_SampleTextApi()
     {
         var response = await _client.GetAsync("api/sampletext/sample-text");
