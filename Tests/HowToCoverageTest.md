@@ -6,9 +6,11 @@ dotnet test --collect:"XPlat Code Coverage"
 
 Use the command below ( in the command line as a single line ) to generate an HTML file, that checks the coverage percentage.
 
+
+! change to your own directory for it to work
 ```
 reportgenerator
- -reports:"X:\ProgramuInzinerija\Tests\TestResults\{ID}\coverage.cobertura.xml"
+ -reports:"{insert directory here}\ProgramuInzinerija\Tests\TestResults\2811cf5e-34e5-427e-a036-f302246447df\coverage.cobertura.xml\coverage.cobertura.xml"
  -targetdir:"coveragereport"
  -reporttypes:Html
 ```
