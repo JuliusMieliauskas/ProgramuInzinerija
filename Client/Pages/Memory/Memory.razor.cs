@@ -10,9 +10,12 @@ namespace Client.Pages;
 public class MemoryBase : ComponentBase
 {
     public enum Difficulty { Easy, Medium, Hard }
-    Tuple<int, int> gridEasy = new  Tuple<int, int>(4, 4);
-    Tuple<int, int> gridMedium = new Tuple<int, int>(4, 6);
-    Tuple<int, int> gridHard = new Tuple<int, int>(6, 6);
+    [Inject]
+    protected NavigationManager? NavigationManager { get; set; }
+
+    protected void NavigateToEasy() => NavigationManager.NavigateTo("/easyMem");
+    protected void NavigateToMedium() => NavigationManager.NavigateTo("/mediumMem");
+    protected void NavigateToHard() => NavigationManager.NavigateTo("/hardMem");
 }
 
 public class Card
