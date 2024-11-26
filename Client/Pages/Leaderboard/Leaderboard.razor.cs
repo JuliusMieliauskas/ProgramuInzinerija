@@ -37,7 +37,7 @@ public class LeaderboardBase : ComponentBase {
         }
 
         // Fetch Calc Game Results
-        var calcResults = await HttpClient.GetFromJsonAsync<List<CalcGameResult>>("api/calcgameresults");
+        var calcResults = await _httpClient.GetFromJsonAsync<List<CalcGameResult>>("api/calcgameresults");
         if (calcResults != null)
         {
             CalcGameResults = calcResults;
