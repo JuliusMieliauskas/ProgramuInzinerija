@@ -1,0 +1,22 @@
+@page "/memory"
+@inherits Client.Pages.MemoryBase
+
+<PageTitle>Memory</PageTitle>
+
+<h1 style="text-align: center; font-size: 2rem; font-weight: bold;">Memory Card Flipping Game</h1>
+<h3 style="text-align: center; font-size: 1.25rem;">Choose a difficulty:</h3>
+
+<div style="display: flex; justify-content: center; gap: 8px; margin-top: 16px;">
+    <button @onclick="NavigateToEasy"
+            style="padding: 8px 16px; background-color: #3b82f6; color: white; font-weight: bold; border-radius: 8px;">
+        Easy
+    </button>
+    <button @onclick="NavigateToMedium"
+            style="padding: 8px 16px; background-color: #3b82f6; color: white; font-weight: bold; border-radius: 8px;">
+        Medium
+    </button>
+    <button @onclick="NavigateToHard"
+            style="padding: 8px 16px; background-color: #3b82f6; color: white; font-weight: bold; border-radius: 8px;">
+        Hard
+    </button>
+</div>
