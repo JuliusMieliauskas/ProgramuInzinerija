@@ -9,12 +9,13 @@ public class MediumMemBase : ComponentBase
 {
     private int gridHeight = 4;
     int gridWidth = 6;
-    int pairs = 12;   
+    int timer = 0;
 }
 
 public class MediumCard
 {
-    bool isFlipped = false;
+    int flippedCards = 0;
+    int pairs = 12;  
     enum cardFaces {M1=1, M2, M3, M4, M5, M6, M7, M8, 
                     M9, M10, M11, M12}
 }
