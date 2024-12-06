@@ -41,6 +41,6 @@ public class LeaderboardBase : ComponentBase {
         if (calcResults != null)
         {
             CalcGameResults = calcResults;
-        }*/
+        }
     }
 }
