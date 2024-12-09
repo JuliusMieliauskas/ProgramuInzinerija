@@ -10,7 +10,7 @@ Use the command below ( in the command line as a single line ) to generate an HT
 ! change to your own directory for it to work
 ```
 reportgenerator
- -reports:"{insert directory here}\ProgramuInzinerija\Tests\TestResults\2811cf5e-34e5-427e-a036-f302246447df\coverage.cobertura.xml\coverage.cobertura.xml"
+ -reports:"D:\Homework\ProgramuInzinerija\Tests\TestResults\"
  -targetdir:"coveragereport"
  -reporttypes:Html
 ```

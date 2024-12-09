@@ -16,7 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="../Shared/*.cs" />
+    <!-- <Compile Include="../Shared/*.cs" /> -->
+    <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj" />
   </ItemGroup>
 
 </Project>

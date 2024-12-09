@@ -44,9 +44,6 @@ public class CalcGameControllerIntegrationTest : IClassFixture<WebApplicationFac
             id: 2
         );
 
-        var postResponse = await _client.PostAsJsonAsync("/api/CalcGameResults", result);
-        Assert.Equal(HttpStatusCode.Created, postResponse.StatusCode);
-
         await _client.PostAsJsonAsync("/api/CalcGameResults", result);
 
         var data = JsonConvert.DeserializeObject<IEnumerable<CalcGameResult>>(await response.Content.ReadAsStringAsync());

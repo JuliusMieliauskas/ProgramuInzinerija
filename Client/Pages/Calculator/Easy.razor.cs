@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Shared;
 using System.Linq.Expressions;
 using System.Net.Http.Json;
+using System.Security.Cryptography;
 
 
 namespace Client.Pages;
@@ -16,22 +17,25 @@ public class EasyBase : ComponentBase
     protected string userAnswer = string.Empty;
     protected bool showResult = false;
     protected bool isCorrect = false;
+    protected int randomNumber;
 
-    private Random random = new Random();
+    protected Random random = new Random();
 
     protected override void OnInitialized()
     {
-        GenerateNewProblem();
+        GenerateNewProblem(random.Next(1, 10), random.Next(1,10), random.Next(0, 2));
     }
 
-    protected void GenerateNewProblem()
+    protected void GenerateNewProblem(int number1Given, int number2Given, int randomNumberGiven)
     {
         showResult = false;
 
-        number1 = random.Next(1, 10);
-        number2 = random.Next(1, 10);
 
-        if (random.Next(0, 2) == 0)
+        number1 = number1Given;
+        number2 = number2Given;
+        randomNumber = randomNumberGiven;
+
+        if (randomNumber == 0)
         {
             operation = "+";
             correctAnswer = number1 + number2;
@@ -50,7 +54,7 @@ public class EasyBase : ComponentBase
         userAnswer = string.Empty;
     }
 
-    protected async void CheckAnswer()
+    protected async Task CheckAnswer()
     {
         try
         {
@@ -72,7 +76,6 @@ public class EasyBase : ComponentBase
         {
             await sendException(cie);
         }
-        await InvokeAsync(StateHasChanged);
         showResult = true;
 
         if (isCorrect)
@@ -101,8 +104,7 @@ public class EasyBase : ComponentBase
         var result = new CalcGameResult
         {
             Difficulty = "Easy",
-            Score = score,
-            Date = DateTime.Now
+            Score = score
         };
 
         await _httpClient.PostAsJsonAsync("api/calcgameresults", result);

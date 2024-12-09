@@ -42,10 +42,16 @@ public class TypingBase : ComponentBase
                 throw new ClientNullException("_httpClient is null!");
             }
         }
+        catch (NullReferenceException e)
+        {
+            infoText = "Error! " + e.Message;
+            return;
+        }
         catch (Exception e)
         {
             infoText = "Error! " + e.Message;
         }
+
         try
         {
             _logger.LogInformation("Fetching sample text from server.");
@@ -119,9 +125,15 @@ public class TypingBase : ComponentBase
 
     public async Task SaveTypingGameResultsAsync()
     {
-        if (_logger == null) throw new NullReferenceException();
-        if (_httpClient == null) throw new ClientNullException();
-
+        try
+        {
+            if (_logger == null) throw new NullReferenceException();
+            if (_httpClient == null) throw new ClientNullException("_httpClient is null!");
+        }
+        catch(Exception e){
+            infoText = "Error! " + e.Message;
+            return;
+        }
         var result2 = new TypingGameResult(wordsPerMinute: WPM, errors: ErrorCount);
         _logger.LogInformation("Saving typing game results: {WPM} WPM, {Errors} errors", WPM, ErrorCount);
 
