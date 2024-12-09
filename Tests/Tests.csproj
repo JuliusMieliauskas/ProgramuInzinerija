@@ -29,7 +29,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Client\MyApp.csproj" />
     <ProjectReference Include="..\Server\server.csproj" />
-    <Compile Include="../Shared/*.cs" />
+    <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj" />
+    <!-- <Compile Include="../Shared/*.cs" /> -->
   </ItemGroup>
 
 </Project>

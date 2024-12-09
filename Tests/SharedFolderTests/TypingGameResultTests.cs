@@ -36,12 +36,6 @@ public class TypingGameResultTests
         Assert.Equal(20, mockClass.WpmToErrorRatio);
     }
 
-    // public int CompareTo(TypingGameResult? other)
-    // {
-    //     if (other == null) return 1;
-
-    //     return WpmToErrorRatio.CompareTo(other.WpmToErrorRatio);
-    // }
 
     [Fact]
     public void TypingGameResult_CompareTo_Smaller()

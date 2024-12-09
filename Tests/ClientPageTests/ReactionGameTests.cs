@@ -1,62 +1,62 @@
 using Client.Pages;
 namespace Tests;
-public class ReactionGameTests
+public class ReactionGameTests : ReactionBase
 {
     private readonly ReactionBase _reactionClass = new ReactionBase();
 
     [Fact]
     public void TestStart_SetsInitialValuesCorrectly()
     {
-        _reactionClass.TestStart();
+        TestStart();
 
-        Assert.True(_reactionClass.inAction);
-        Assert.Equal("Wait for the button.", _reactionClass.commencingText);
-        Assert.InRange(_reactionClass.reactionSpringUp, 2, 4);
+        Assert.True(inAction);
+        Assert.Equal("Wait for the button.", commencingText);
+        Assert.InRange(reactionSpringUp, 2, 4);
     }
     [Fact]
     public async Task TestStart_TriggersSpringUpAfterElapsedTime()
     {
-        _reactionClass.TestStart();
+        TestStart();
 
         double elapsedTime = 0;
-        while (elapsedTime < _reactionClass.reactionSpringUp)
+        while (elapsedTime < reactionSpringUp)
         {
             await Task.Delay(50);
             elapsedTime += 0.05;
         }
 
-        Assert.True(_reactionClass.springUp);
-        Assert.Equal("Press!", _reactionClass.commencingText);
+        Assert.True(springUp);
+        Assert.Equal("Press!", commencingText);
     }
     [Fact]
     public void TestEarly_SetsCommencingTextAndResetsTimePassed()
     {
-        _reactionClass.TestEarly();
+        TestEarly();
 
-        Assert.Equal("Too early! Wait for the button.", _reactionClass.commencingText);
-        Assert.Equal(0, _reactionClass.timePassed);
+        Assert.Equal("Too early! Wait for the button.", commencingText);
+        Assert.Equal(0, timePassed);
     }
     [Fact]
     public void TestFinish_DisposesAndReinitializesTimer_SetsFieldsCorrectly()
     {
-        _reactionClass.reactionSpringUp = 2.5; 
-        _reactionClass.timePassed = 5.0;     
+        reactionSpringUp = 2.5; 
+        timePassed = 5.0;     
 
-        var originalTimer = _reactionClass.reactionTimer;
+        var originalTimer = reactionTimer;
 
-        _reactionClass.TestFinish();
+        TestFinish();
 
         Assert.Throws<ObjectDisposedException>(() => originalTimer.Start());
 
-        Assert.NotNull(_reactionClass.reactionTimer);
-        Assert.Equal(50, _reactionClass.reactionTimer.Interval);
+        Assert.NotNull(reactionTimer);
+        Assert.Equal(50, reactionTimer.Interval);
 
-        Assert.Equal(2.5, _reactionClass.reactionTime); 
+        Assert.Equal(2.5, reactionTime); 
 
-        Assert.Equal(0, _reactionClass.timePassed);
+        Assert.Equal(0, timePassed);
 
-        Assert.False(_reactionClass.springUp);
+        Assert.False(springUp);
 
-        Assert.False(_reactionClass.inAction);
+        Assert.False(inAction);
     }
 }
