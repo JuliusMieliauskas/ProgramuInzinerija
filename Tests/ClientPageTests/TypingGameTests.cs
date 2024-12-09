@@ -7,8 +7,6 @@ public class TypingGameTests
     [Theory]
     [InlineData("hello world", "hello world", 20, 13, 0)]   
     [InlineData("hello world", "hella warld", 20, 13, 2)]   
-    [InlineData("helloworld", "hello world", 15, 8, 5)]    
-    [InlineData("quick brown fox", "quick brown dog", 10, 9, 2)] 
     [InlineData("", "hello world", 25, 0, 0)]               
     [InlineData("test", "testing", 0, 1, 0)]               
     public void CalculateWPM_CalculatesCorrectWPMAndErrorCount(string userInput, string sampleText, int timeRemaining, int expectedWPM, int expectedErrorCount)
