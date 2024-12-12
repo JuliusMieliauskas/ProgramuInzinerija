@@ -1,6 +1,28 @@
 @page "/easyMem"
+@using static Client.Pages.EasyMemBase
 @inherits Client.Pages.EasyMemBase
 
 <PageTitle>Memory: Easy difficulty</PageTitle>
 
 <h1 style="text-align: center; font-size: 2rem; font-weight: bold;">Find all 8 pairs!</h1>
+
+<h1>Easy @(victories == 0 ? "" : " - " + victories + (victories == 1 ? " victory!" : " victories!"))</h1>
+
+@foreach (List<Card> cardRow in Cards)
+{
+    @foreach (Card card in cardRow)
+    {
+        <div class="flip-card" style=@(!card.flipped ? "transform: rotateY(180deg);" : "")>
+            <div class="flip-card-inner" style=@(!card.flipped ? "transform: rotateY(180deg);" : "")>
+                <div class="flip-card-front" style="background-color: @(card.flipped ? card.color : "#aaa");">
+                    @card.text
+                </div>
+                <div class="flip-card-back" @onclick="() => flip(card)">
+                </div>
+            </div>
+        </div>
+    }
+    <br />
+}
+
+<h2>Errors: @wrongs</h2>
