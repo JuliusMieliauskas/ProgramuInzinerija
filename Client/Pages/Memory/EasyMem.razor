@@ -70,30 +70,30 @@
 			</div>
 		}
 	}
-    
 </div>
 
 <style>
-    ﻿.memory-grid {
-	    display: grid;
-        grid-template-columns: repeat(4, 50px);
-        width: 120px;
-        height: 120px;
-    }
+	﻿.memory-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 50px);
+		grid-template-rows: repeat(4, 50px);
+		width: 200px;
+		height: 200px;
+	}
 
-    .memory-grid > div {
+	.memory-grid > div {
 		height: 50px;
-		weight: 50px;
-	    background-color: violet;
-        border: 1px solid white;
-	    color: black;
-	    display: flex;
-	    justify-content: center;
+		width: 50px;
+		background-color: violet;
+		border: 1px solid white;
+		color: black;
+		display: flex;
+		justify-content: center;
 		align-items: center;
 		font-size: 20px;
-    }
+	}
 
-    .memory-grid > div.found {
-	    background: greenyellow;
-    }
+	.memory-grid > div.found {
+		background: greenyellow;
+	}
 </style>
