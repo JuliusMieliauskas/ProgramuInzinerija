@@ -7,6 +7,7 @@ using Shared;
 namespace Client.Pages;
 public class MemoryBase : ComponentBase
 {
+    protected int missmatches = 0;
     protected string message;
     protected bool gameOver = false;
     public enum Difficulty { Easy, Medium, Hard }
@@ -30,7 +31,7 @@ public class MemoryBase : ComponentBase
             return;
         }
         if (gameOver){
-            MemoryGameResult result = new MemoryGameResult(missmatches);
+            MemoryGameResult result = new MemoryGameResult(missmatches: missmatches);
             MemoryResultList.Add(result);
 
             missmatches = 0;
