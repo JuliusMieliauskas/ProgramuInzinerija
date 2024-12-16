@@ -1,16 +1,17 @@
-# Programų sistemų inžinerija
+# Software Engineering
 
-## Žmogaus refleksų ir pažinimo tobulinimas
+## Human reflex and abilities improvement
 
-### Komanda: Trys randomai
+### Team Name: Keturi Randomai
 
 Julius Mieliauskas julius.mieliauskas@mif.stud.vu.lt<br>
 Ruslanas Maksimkinas ruslanas.maksiminas@mif.stud.vu.lt<br>
-Julija Mikeliūnaite julija.mikeliunaite@mif.stud.vu.lt
+Julija Mikeliūnaite julija.mikeliunaite@mif.stud.vu.lt<br>
+Martyna Valančiūtė martyna.valanciute@mif.stud.vu.lt
 
-## Funkcionalumai:
+## Functionalities:
 
-#### 1. Make a main interface fom which user can choose which training to perform, access his previous results or check how other users have performed.
+#### 1. Make a main interface from which user can choose which training to perform, access his previous results or check how other users have performed.
 
 #### 2. Make a reaction training game. Make the trainer randomise the timings, count the milliseconds user took to react.
 
