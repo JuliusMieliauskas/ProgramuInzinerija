@@ -6,7 +6,6 @@
 	int[] cardArray = new int[16];
 	List<int> clickedCards = new List<int>();
 	List<int> matchedCards = new List<int>();
-	int missmatches = 0;
 
 	protected override void OnInitialized()
 	{
@@ -41,8 +40,6 @@
 				{
 					matchedCards.Add(clickedCards[0]);
 					matchedCards.Add(clickedCards[1]);
-				} else{
-					missmatches++;
 				}
 
 				clickedCards.Clear();
@@ -56,8 +53,6 @@
 <PageTitle>Memory: Easy difficulty</PageTitle>
 
 <h1 style="text-align: center; font-size: 2rem; font-weight: bold;">Find all 8 pairs!</h1>
-<h3 style="text-align: center; font-size: 1rem; ">Missmatches: @missmatches</h3>
-
 <div class="mem-box">
 	<div class="memory-grid">
 		@for (int index = 0; index < cardArray.Length; index++)
