@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bunit" Version="1.37.7" />
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.10" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
@@ -25,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Client\MyApp.csproj" />
     <ProjectReference Include="..\Server\server.csproj" />
+    <ProjectReference Include="../Shared/Shared.csproj" />
     <Compile Include="../Shared/*.cs" />
   </ItemGroup>
 

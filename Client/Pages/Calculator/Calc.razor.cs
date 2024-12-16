@@ -5,9 +5,9 @@ namespace Client.Pages
     public class CalcBase : ComponentBase
     {
         [Inject]
-        protected NavigationManager NavigationManager { get; set; } = null!;
+        public NavigationManager NavigationManager { get; set; } = null!;
 
-        protected void NavigateToEasy() => NavigationManager.NavigateTo("/easy");
-        protected void NavigateToMedium() => NavigationManager.NavigateTo("/medium");
+        public void NavigateToEasy() => NavigationManager.NavigateTo("/easy");
+        public void NavigateToMedium() => NavigationManager.NavigateTo("/medium");
     }
 }

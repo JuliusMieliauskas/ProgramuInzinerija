@@ -19,8 +19,8 @@
                     @(isCorrect ? "Correct!" : "Wrong Answer. The correct answer was " + correctAnswer)
                 </h4>
             }
-            <button @onclick="GenerateNewProblem"
-                    style="padding: 8px 16px; background-color: #3b82f6; color: white; font-weight: bold; border-radius: 8px;">
+            <button @onclick="() => GenerateNewProblem()"
+                  style="padding: 8px 16px; background-color: #3b82f6; color: white; font-weight: bold; border-radius: 8px;">
                 Try Again
             </button>
         </div>
@@ -35,7 +35,7 @@
             <input type="text" @bind="userAnswer" placeholder="Enter your answer here"
                    style="padding: 8px; border-radius: 4px; border: 1px solid #d1d5db; margin-bottom: 8px; width: 100px; text-align: center;" />
 
-            <button @onclick="CheckAnswer"
+            <button @onclick="() => CheckAnswer()"
                     style="padding: 8px 16px; background-color: #10b981; color: white; font-weight: bold; border-radius: 8px;">
                 Submit
             </button>

@@ -8,19 +8,19 @@ namespace Client.Pages
     public class EasyBase : ComponentBase
     {
         [Inject]
-        protected HttpClient HttpClient { get; set; } = null!;
-        protected int number1;
-        protected int number2;
-        protected string operation = string.Empty;
-        protected int correctAnswer;
-        protected string userAnswer = string.Empty;
-        protected bool showResult = false;
-        protected bool isCorrect = false;
-        protected int totalRounds = 0;
-        protected int correctAnswers = 0;
-
-        protected int remainingTime = 30;
-        protected bool timeIsUp = false;
+        public HttpClient HttpClient { get; set; } = null!;
+        public int number1 { get; set; }
+        public int number2 { get; set; }
+        public string operation { get; set; } = string.Empty;
+        public int correctAnswer { get; set; }
+        public string userAnswer { get; set; } = string.Empty;
+        public bool showResult { get; set; } = false;
+        public bool isCorrect { get; set; } = false;
+        public int totalRounds { get; set; } = 0;
+        public int correctAnswers { get; set; } = 0;
+        public bool IsTestMode { get; set; } = false;
+        public int remainingTime { get; set; } = 30;
+        public bool timeIsUp { get; set; } = false;
         private Timer? countdownTimer;
         private Random random = new Random();
 
@@ -29,7 +29,7 @@ namespace Client.Pages
             RestartGame();
         }
 
-        protected void GenerateNewProblem()
+        public void GenerateNewProblem()
         {
             if (timeIsUp) return;
 
@@ -57,7 +57,7 @@ namespace Client.Pages
             userAnswer = string.Empty;
         }
 
-        protected void CheckAnswer()
+        public void CheckAnswer()
         {
             if (timeIsUp) return;
 
@@ -83,9 +83,20 @@ namespace Client.Pages
             showResult = true;
         }
 
-        protected void StartCountdown()
+        public void StartCountdown()
         {
-            countdownTimer = new Timer(OnCountdownElapsed, null, 1000, 1000); 
+            countdownTimer = new Timer(OnCountdownElapsed, null, 1000, 1000);
+        }
+        public void ForceCountdownToExpire()
+        {
+            while (remainingTime > 0)
+            {
+                OnCountdownElapsed(null);
+            }
+
+            countdownTimer?.Dispose();
+            countdownTimer = null;
+            timeIsUp = true;
         }
 
         private void OnCountdownElapsed(object? state)
@@ -93,18 +104,26 @@ namespace Client.Pages
             if (remainingTime > 0)
             {
                 remainingTime--;
-                InvokeAsync(StateHasChanged); 
+
+                if (!IsTestMode)
+                {
+                    InvokeAsync(StateHasChanged);
+                }
             }
             else
             {
                 timeIsUp = true;
                 countdownTimer?.Dispose();
                 countdownTimer = null;
-                InvokeAsync(StateHasChanged);
+
+                if (!IsTestMode)
+                {
+                    InvokeAsync(StateHasChanged);
+                }
             }
         }
 
-        protected void RestartGame()
+        public void RestartGame()
         {
             remainingTime = 30;
             timeIsUp = false;
@@ -114,7 +133,7 @@ namespace Client.Pages
             GenerateNewProblem();
         }
 
-        protected async void SaveResults()
+        public async void SaveResults()
         {
             var result = new CalcGameResult
             {
