@@ -18,9 +18,10 @@
             </button>
         </div>
     }
-    else
+    else if (!timeIsUp)
     {
         <div style="text-align: center;">
+            <p>Time left: <strong>@remainingTime</strong> seconds</p>
             <p>Solve the following problem:</p>
             <p style="font-weight: bold; font-size: 1.25rem;">@number1 @operation @number2 = ?</p>
 
@@ -30,6 +31,17 @@
             <button @onclick="CheckAnswer"
                     style="padding: 8px 16px; background-color: #10b981; color: white; font-weight: bold; border-radius: 8px;">
                 Submit
+            </button>
+        </div>
+    }
+    else
+    {
+        <div style="text-align: center;">
+            <h4 style="color: #ef4444;">Time's up!</h4>
+            <p>You answered <strong>@correctAnswers</strong> out of <strong>@totalRounds</strong> problems correctly.</p>
+            <button @onclick="RestartGame"
+                    style="padding: 8px 16px; background-color: #3b82f6; color: white; font-weight: bold; border-radius: 8px;">
+                Restart
             </button>
         </div>
     }

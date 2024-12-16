@@ -8,8 +8,7 @@ namespace Client.Pages;
 
 public class LeaderboardBase : ComponentBase {
     [Inject]
-    private HttpClient? _httpClient { get; set; }
-
+    private HttpClient _httpClient { get; set; } = null!;
     protected List<TypingGameResult> TypingGameResults { get; set; } = new List<TypingGameResult>();
     protected List<ReactionGameResult> ReactionGameResults { get; set; } = new List<ReactionGameResult>();
     protected List<CalcGameResult> CalcGameResults { get; set; } = new List<CalcGameResult>();
@@ -37,7 +36,7 @@ public class LeaderboardBase : ComponentBase {
         }
 
         // Fetch Calc Game Results
-        var calcResults = await HttpClient.GetFromJsonAsync<List<CalcGameResult>>("api/calcgameresults");
+        var calcResults = await _httpClient.GetFromJsonAsync<List<CalcGameResult>>("api/calcgameresults");
         if (calcResults != null)
         {
             CalcGameResults = calcResults;
