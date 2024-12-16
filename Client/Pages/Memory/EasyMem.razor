@@ -53,44 +53,48 @@
 <PageTitle>Memory: Easy difficulty</PageTitle>
 
 <h1 style="text-align: center; font-size: 2rem; font-weight: bold;">Find all 8 pairs!</h1>
-
-<div class="memory-grid">
-	@for (int index = 0; index < cardArray.Length; index++)
-	{
-		int localIndex = index;
-		int card = cardArray[index];
-		if (matchedCards.Contains(index))
+<div class="mem-box">
+	<div class="memory-grid">
+		@for (int index = 0; index < cardArray.Length; index++)
 		{
-			<div class="found"></div>
+			int localIndex = index;
+			int card = cardArray[index];
+			if (matchedCards.Contains(index))
+			{
+				<div class="found"></div>
+			}
+			else
+			{
+				<div @onclick="() => CardClicked(localIndex)">
+					<span hidden="@(!clickedCards.Contains(localIndex))">@card</span>
+				</div>
+			}
 		}
-		else
-		{
-			<div @onclick="() => CardClicked(localIndex)">
-				<span hidden="@(!clickedCards.Contains(localIndex))">@card</span>
-			</div>
-		}
-	}
+	</div>
 </div>
 
+
 <style>
+	.mem-box{
+		height: 300px;
+		width: 300px;
+		margin: auto;
+	}
+
 	﻿.memory-grid {
-		display: grid;
-		grid-template-columns: repeat(4, 50px);
-		grid-template-rows: repeat(4, 50px);
-		width: 200px;
-		height: 200px;
+		display: inline-grid;
 	}
 
 	.memory-grid > div {
-		height: 50px;
-		width: 50px;
+		height: 75px;
+		width: 75px;
 		background-color: violet;
 		border: 1px solid white;
 		color: black;
-		display: flex;
+		display: inline-grid;
 		justify-content: center;
 		align-items: center;
-		font-size: 20px;
+		font: 50px bold;
 	}
 
 	.memory-grid > div.found {
