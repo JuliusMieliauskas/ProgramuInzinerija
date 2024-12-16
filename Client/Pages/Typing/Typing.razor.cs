@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using System.Timers;
 using Shared;
+using System;
 using System.Net.Http.Json;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -10,23 +11,31 @@ namespace Client.Pages;
 
 public class TypingBase : ComponentBase
     {
-        protected string SampleText = "";
-        protected string UserInput = "";
-        protected System.Timers.Timer GameTimer;
-        protected int TimeRemaining = 30;
-        protected int WPM = 0;
-        protected int ErrorCount = 0;
-        protected bool GameStarted = false;
-        protected ElementReference textAreaReference;
+        public string SampleText = "";
+        public string UserInput = "";
+        public System.Timers.Timer GameTimer;
+        public int TimeRemaining = 30;
+        public int WPM = 0;
+        public int ErrorCount = 0;
+        public bool GameStarted = false;
+        public ElementReference textAreaReference;
         
         [Inject]
-        private HttpClient _httpClient { get; set; }
+        protected HttpClient? _httpClient { get; set; }
 
         [Inject]
-        private ILogger<TypingBase> Logger { get; set; }
+        protected ILogger<TypingBase>? Logger { get; set; }
+
+    
 
         protected override async Task OnInitializedAsync()
         {
+            if (Logger == null){
+                throw new NullReferenceException();
+            }
+            if (_httpClient == null){
+                throw new ClientNullException("_httpClient is null!");
+            }
             try
             {
                 Logger.LogInformation("Fetching sample text from server.");
@@ -39,19 +48,19 @@ public class TypingBase : ComponentBase
             }
 
             GameTimer = new System.Timers.Timer(1000);
-            GameTimer.Elapsed += (sender, e) => 
+            GameTimer.Elapsed += async (sender, e) => 
             {
                 TimeRemaining--;
                 if (TimeRemaining <= 0)
                 {
-                    EndGame();
+                    await EndGame();
                 }
                 CalculateWPM();
-                InvokeAsync(StateHasChanged);
+                await InvokeAsync(StateHasChanged);
             };
         }
 
-        protected async Task StartGame()
+        public async Task StartGame()
         {
             UserInput = "";
             TimeRemaining = 10;
@@ -64,15 +73,15 @@ public class TypingBase : ComponentBase
             await textAreaReference.FocusAsync();
         }
 
-        protected void EndGame()
+        public async Task EndGame()
         {
             GameTimer.Stop();
             GameStarted = false;
             CalculateWPM();
-            SaveTypingGameResultsAsync();
+            await SaveTypingGameResultsAsync();
         }
 
-        protected void HandleKeyDown(KeyboardEventArgs e)
+        public void HandleKeyDown(KeyboardEventArgs e)
         {
             if (!GameStarted)
             {
@@ -82,7 +91,7 @@ public class TypingBase : ComponentBase
             CalculateWPM();
         }
 
-        protected void CalculateWPM()
+        public void CalculateWPM()
         {
             int totalCharacters = UserInput.Length;
             double minutes = (30 - TimeRemaining) / 60.0;
@@ -98,8 +107,10 @@ public class TypingBase : ComponentBase
                 .Count();
         }
 
-        private async Task SaveTypingGameResultsAsync()
+        public async Task SaveTypingGameResultsAsync()
         {
+            if (Logger == null) throw new NullReferenceException();
+            if (_httpClient == null) throw new ClientNullException();
             var result = new TypingGameResult
             {
                 WordsPerMinute = WPM,

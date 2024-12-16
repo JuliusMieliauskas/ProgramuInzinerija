@@ -5,14 +5,20 @@ using Microsoft.EntityFrameworkCore;
 using Data;
 using Extensions;
 
-var builder = WebApplication.CreateBuilder(args);
+public class Program
+{
+    private static void Main(string[] args)
+    {
+        var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCustomServices(); // Use the extension method to add all services
+        builder.Services.AddCustomServices(); // Use the extension method to add all services
 
-var app = builder.Build();
+        var app = builder.Build();
 
-app.UseCors("AllowAllOrigins"); 
+        app.UseCors("AllowAllOrigins");
 
-app.MapControllers();
+        app.MapControllers();
 
-app.Run();
+        app.Run();
+    }
+}
