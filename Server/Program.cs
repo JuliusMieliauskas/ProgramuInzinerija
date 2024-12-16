@@ -11,7 +11,7 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddCustomServices(); // Use the extension method to add all services
+        builder.Services.AddCustomServices();
 
         var app = builder.Build();
 

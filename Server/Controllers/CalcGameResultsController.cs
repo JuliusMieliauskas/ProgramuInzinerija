@@ -1,18 +1,24 @@
 using Microsoft.AspNetCore.Mvc;
 using Shared;
-using System.Collections.Generic;
+using Data;
 using System.Linq;
+using System.Threading.Tasks;
 
 [ApiController]
 [Route("api/[controller]")]
 public class CalcGameResultsController : ControllerBase
 {
-    private static readonly List<CalcGameResult> CalcGameResults = new();
+    private readonly AppDbContext _context;
+
+    public CalcGameResultsController(AppDbContext context)
+    {
+        _context = context;
+    }
 
     [HttpGet]
-    public ActionResult<List<CalcGameResult>> GetResults()
+    public async Task<ActionResult<List<CalcGameResult>>> GetResults()
     {
-        var sortedResults = CalcGameResults
+        var sortedResults = _context.CalcGameResults
             .OrderByDescending(result => result.CorrectAnswers)
             .ThenByDescending(result => result.TotalRounds)
             .ToList();
@@ -20,10 +26,12 @@ public class CalcGameResultsController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult AddResult(CalcGameResult result)
+    public async Task<ActionResult> AddResult([FromBody] CalcGameResult result)
     {
-        result.Id = CalcGameResults.Count > 0 ? CalcGameResults.Max(r => r.Id) + 1 : 1;
-        CalcGameResults.Add(result);
-        return Ok();
+        if (result == null) return BadRequest("Invalid result data.");
+
+        _context.CalcGameResults.Add(result);
+        await _context.SaveChangesAsync();
+        return Ok(result);
     }
 }

@@ -57,7 +57,7 @@ namespace Client.Pages
             userAnswer = string.Empty;
         }
 
-        protected async void CheckAnswer()
+        protected void CheckAnswer()
         {
             if (timeIsUp) return;
 
@@ -85,7 +85,7 @@ namespace Client.Pages
 
         protected void StartCountdown()
         {
-            countdownTimer = new Timer(OnCountdownElapsed, null, 1000, 1000); // 1-second interval
+            countdownTimer = new Timer(OnCountdownElapsed, null, 1000, 1000); 
         }
 
         private void OnCountdownElapsed(object? state)
@@ -93,7 +93,7 @@ namespace Client.Pages
             if (remainingTime > 0)
             {
                 remainingTime--;
-                InvokeAsync(StateHasChanged); // Update UI on the main thread
+                InvokeAsync(StateHasChanged); 
             }
             else
             {
@@ -112,6 +112,26 @@ namespace Client.Pages
             correctAnswers = 0;
             StartCountdown();
             GenerateNewProblem();
+        }
+
+        protected async void SaveResults()
+        {
+            var result = new CalcGameResult
+            {
+                Difficulty = "Easy",
+                CorrectAnswers = correctAnswers,
+                TotalRounds = totalRounds,
+            };
+
+            try
+            {
+                await HttpClient.PostAsJsonAsync("api/calcgameresults", result);
+                Console.WriteLine("Result saved successfully.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving result: {ex.Message}");
+            }
         }
     }
 }

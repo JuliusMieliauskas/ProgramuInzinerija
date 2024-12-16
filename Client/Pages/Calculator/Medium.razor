@@ -1,0 +1,61 @@
+@page "/medium"
+@inherits Client.Pages.MediumBase
+
+<PageTitle>Medium Option</PageTitle>
+
+<h1 style="text-align: center; font-size: 2rem; font-weight: bold;">Medium Quick Calculate</h1>
+
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 16px;">
+    @if (showResult)
+    {
+        <div style="text-align: center;">
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <p style="color: #ef4444; font-weight: bold;">@errorMessage</p>
+            }
+            else
+            {
+                <h4 style="color: @(isCorrect ? "#10b981" : "#ef4444");">
+                    @(isCorrect ? "Correct!" : "Wrong Answer. The correct answer was " + correctAnswer)
+                </h4>
+            }
+            <button @onclick="GenerateNewProblem"
+                    style="padding: 8px 16px; background-color: #3b82f6; color: white; font-weight: bold; border-radius: 8px;">
+                Try Again
+            </button>
+        </div>
+    }
+    else if (!timeIsUp)
+    {
+        <div style="text-align: center;">
+            <p>Time left: <strong>@remainingTime</strong> seconds</p>
+            <p>Solve the following problem:</p>
+            <p style="font-weight: bold; font-size: 1.25rem;">@number1 @operation @number2 = ?</p>
+
+            <input type="text" @bind="userAnswer" placeholder="Enter your answer here"
+                   style="padding: 8px; border-radius: 4px; border: 1px solid #d1d5db; margin-bottom: 8px; width: 100px; text-align: center;" />
+
+            <button @onclick="CheckAnswer"
+                    style="padding: 8px 16px; background-color: #10b981; color: white; font-weight: bold; border-radius: 8px;">
+                Submit
+            </button>
+        </div>
+    }
+    else
+    {
+        <div style="text-align: center;">
+            <h4 style="color: #ef4444;">Time's up!</h4>
+            <p>You answered <strong>@correctAnswers</strong> out of <strong>@totalRounds</strong> problems correctly.</p>
+            <div style="display: flex; gap: 8px; justify-content: center; margin-top: 8px;">
+                <button @onclick="RestartGame"
+                        style="padding: 8px 16px; background-color: #3b82f6; color: white; font-weight: bold; border-radius: 8px;">
+                    Restart
+                </button>
+                <button @onclick="SaveResults"
+                        style="padding: 8px 16px; background-color: #10b981; color: white; font-weight: bold; border-radius: 8px;">
+                    Save Result
+                </button>
+            </div>
+        </div>
+    }
+</div>

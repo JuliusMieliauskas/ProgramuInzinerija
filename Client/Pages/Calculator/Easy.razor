@@ -39,10 +39,16 @@
         <div style="text-align: center;">
             <h4 style="color: #ef4444;">Time's up!</h4>
             <p>You answered <strong>@correctAnswers</strong> out of <strong>@totalRounds</strong> problems correctly.</p>
-            <button @onclick="RestartGame"
-                    style="padding: 8px 16px; background-color: #3b82f6; color: white; font-weight: bold; border-radius: 8px;">
-                Restart
-            </button>
+            <div style="display: flex; gap: 8px; justify-content: center; margin-top: 8px;">
+                <button @onclick="RestartGame"
+                        style="padding: 8px 16px; background-color: #3b82f6; color: white; font-weight: bold; border-radius: 8px;">
+                    Restart
+                </button>
+                <button @onclick="SaveResults"
+                        style="padding: 8px 16px; background-color: #10b981; color: white; font-weight: bold; border-radius: 8px;">
+                    Save Result
+                </button>
+            </div>
         </div>
     }
 </div>

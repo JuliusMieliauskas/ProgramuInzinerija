@@ -6,6 +6,8 @@ namespace Client.Pages
     {
         [Inject]
         protected NavigationManager NavigationManager { get; set; } = null!;
+
         protected void NavigateToEasy() => NavigationManager.NavigateTo("/easy");
+        protected void NavigateToMedium() => NavigationManager.NavigateTo("/medium");
     }
 }

@@ -10,4 +10,6 @@ public class AppDbContext : DbContext
     public DbSet<TypingGameResult> TypingGameResults { get; set; }
 
     public DbSet<ReactionGameResult> ReactionGameResults {get; set; }
+
+    public DbSet<CalcGameResult> CalcGameResults { get; set; }
 }
