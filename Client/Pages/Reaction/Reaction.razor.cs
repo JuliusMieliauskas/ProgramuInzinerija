@@ -8,20 +8,20 @@ namespace Client.Pages;
 public class ReactionBase : ComponentBase
 {
     Random rand = new Random();
-    public bool inAction = false;
-    public bool springUp = false;
-    public double timePassed = 0;
-    public string commencingText = "Wait for the button.";
-    public double reactionTime;
-    public double reactionSpringUp = 3;
-    public System.Timers.Timer reactionTimer = new System.Timers.Timer(50);
+    protected bool inAction = false;
+    protected bool springUp = false;
+    protected double timePassed = 0;
+    protected string commencingText = "Wait for the button.";
+    protected double reactionTime;
+    protected double reactionSpringUp = 3;
+    protected System.Timers.Timer reactionTimer = new System.Timers.Timer(50);
     
     [Inject]
-    private HttpClient? _httpClient { get; set; }
+    protected HttpClient? _httpClient { get; set; }
     
-    public List<ReactionGameResult> reactionResultList = new List<ReactionGameResult>();
+    protected List<ReactionGameResult> reactionResultList = new List<ReactionGameResult>();
 
-    public void TestStart(){
+    protected void TestStart(){
         reactionSpringUp = rand.Next(2, 4);
         reactionSpringUp += rand.NextDouble();
         inAction = true;
@@ -36,11 +36,11 @@ public class ReactionBase : ComponentBase
             InvokeAsync(StateHasChanged);
         }; 
     }
-    public void TestEarly(){
+    protected void TestEarly(){
         commencingText = "Too early! Wait for the button.";
         timePassed = 0;
     }
-    public void TestFinish(){
+    protected void TestFinish(){
         reactionTimer.Dispose();
         reactionTimer = new System.Timers.Timer(50);
         reactionTime = timePassed - reactionSpringUp;
@@ -48,8 +48,15 @@ public class ReactionBase : ComponentBase
         springUp = false;
         inAction = false;
     }
-    public async void SaveResults(){
-        if (_httpClient == null) throw new ClientNullException();
+    protected async Task SaveResults(){
+        try
+        {
+            if (_httpClient == null) throw new ClientNullException();
+        }
+        catch(ClientNullException){
+            commencingText = "Server Error, results cannot be saved!";
+            return;
+        }
         if (reactionTime != 0){
             ReactionGameResult result = new ReactionGameResult(reactionTime: reactionTime);
             reactionResultList.Add(result);

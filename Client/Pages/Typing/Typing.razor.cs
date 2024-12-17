@@ -10,117 +10,133 @@ using System.Threading.Tasks;
 namespace Client.Pages;
 
 public class TypingBase : ComponentBase
+{
+    public string SampleText = "";
+    public string UserInput = "";
+    public System.Timers.Timer GameTimer;
+    public int TimeRemaining = 30;
+    public int WPM = 0;
+    public int ErrorCount = 0;
+    public string infoText = "";
+    public bool GameStarted = false;
+    public ElementReference textAreaReference;
+
+    [Inject]
+    protected HttpClient? _httpClient { get; set; }
+
+    [Inject]
+    protected ILogger<TypingBase>? _logger { get; set; }
+
+
+
+    protected override async Task OnInitializedAsync()
     {
-        public string SampleText = "";
-        public string UserInput = "";
-        public System.Timers.Timer GameTimer;
-        public int TimeRemaining = 30;
-        public int WPM = 0;
-        public int ErrorCount = 0;
-        public bool GameStarted = false;
-        public ElementReference textAreaReference;
-        
-        [Inject]
-        protected HttpClient? _httpClient { get; set; }
-
-        [Inject]
-        protected ILogger<TypingBase>? Logger { get; set; }
-
-    
-
-        protected override async Task OnInitializedAsync()
+        try
         {
-            if (Logger == null){
+            if (_logger == null)
+            {
                 throw new NullReferenceException();
             }
-            if (_httpClient == null){
+            if (_httpClient == null)
+            {
                 throw new ClientNullException("_httpClient is null!");
             }
-            try
-            {
-                Logger.LogInformation("Fetching sample text from server.");
-                SampleText = await _httpClient.GetStringAsync("api/sampletext/sample-text");
-            }
-            catch (Exception ex)
-            {
-                Logger.LogError(ex, "Failed to fetch sample text.");
-                SampleText = "Error loading text.";
-            }
-
-            GameTimer = new System.Timers.Timer(1000);
-            GameTimer.Elapsed += async (sender, e) => 
-            {
-                TimeRemaining--;
-                if (TimeRemaining <= 0)
-                {
-                    await EndGame();
-                }
-                CalculateWPM();
-                await InvokeAsync(StateHasChanged);
-            };
+        }
+        catch (NullReferenceException e)
+        {
+            infoText = "Error! " + e.Message;
+            return;
+        }
+        catch (Exception e)
+        {
+            infoText = "Error! " + e.Message;
         }
 
-        public async Task StartGame()
+        try
         {
-            UserInput = "";
-            TimeRemaining = 10;
-            WPM = 0;
-            ErrorCount = 0;
-            GameStarted = true;
-            GameTimer.Start();
-
-            await Task.Delay(10);
-            await textAreaReference.FocusAsync();
+            _logger.LogInformation("Fetching sample text from server.");
+            SampleText = await _httpClient.GetStringAsync("api/sampletext/sample-text");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to fetch sample text.");
+            SampleText = "Error loading text.";
         }
 
-        public async Task EndGame()
+        GameTimer = new System.Timers.Timer(1000);
+        GameTimer.Elapsed += async (sender, e) =>
         {
-            GameTimer.Stop();
-            GameStarted = false;
+            TimeRemaining--;
+            if (TimeRemaining <= 0)
+            {
+                await EndGame();
+            }
             CalculateWPM();
-            await SaveTypingGameResultsAsync();
-        }
-
-        public void HandleKeyDown(KeyboardEventArgs e)
-        {
-            if (!GameStarted)
-            {
-                return;
-            }
-
-            CalculateWPM();
-        }
-
-        public void CalculateWPM()
-        {
-            int totalCharacters = UserInput.Length;
-            double minutes = (30 - TimeRemaining) / 60.0;
-            
-            if (minutes > 0)
-            {
-                WPM = (int)(totalCharacters / 5.0 / minutes);
-            }
-
-            ErrorCount = UserInput
-                .Take(Math.Min(UserInput.Length, SampleText.Length))
-                .Where((c, i) => c != SampleText[i])
-                .Count();
-        }
-
-        public async Task SaveTypingGameResultsAsync()
-        {
-            if (Logger == null) throw new NullReferenceException();
-            if (_httpClient == null) throw new ClientNullException();
-            var result = new TypingGameResult
-            {
-                WordsPerMinute = WPM,
-                Errors = ErrorCount,
-                Status = (ErrorCount == 0 ? TypingGameStatus.PerfectRun : TypingGameStatus.NotPerfectRun)
-            };
-            
-            var result2 = new TypingGameResult(wordsPerMinute: WPM, errors: ErrorCount);
-            Logger.LogInformation("Saving typing game results: {WPM} WPM, {Errors} errors", WPM, ErrorCount);
-
-            await _httpClient.PostAsJsonAsync("api/typinggameresults", result2);
-        }
+            await InvokeAsync(StateHasChanged);
+        };
     }
+
+    public async Task StartGame()
+    {
+        UserInput = "";
+        TimeRemaining = 10;
+        WPM = 0;
+        ErrorCount = 0;
+        GameStarted = true;
+        GameTimer.Start();
+
+        await Task.Delay(10);
+        await textAreaReference.FocusAsync();
+    }
+
+    public async Task EndGame()
+    {
+        GameTimer.Stop();
+        GameStarted = false;
+        CalculateWPM();
+        await SaveTypingGameResultsAsync();
+    }
+
+    public void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (!GameStarted)
+        {
+            return;
+        }
+
+        CalculateWPM();
+    }
+
+    public void CalculateWPM()
+    {
+        int totalCharacters = UserInput.Length;
+        double minutes = (30 - TimeRemaining) / 60.0;
+
+        if (minutes > 0)
+        {
+            WPM = (int)(totalCharacters / 5.0 / minutes);
+        }
+
+        ErrorCount = UserInput
+            .Take(Math.Min(UserInput.Length, SampleText.Length))
+            .Where((c, i) => c != SampleText[i])
+            .Count();
+    }
+
+    public async Task SaveTypingGameResultsAsync()
+    {
+        try
+        {
+            if (_logger == null) throw new NullReferenceException();
+            if (_httpClient == null) throw new ClientNullException("_httpClient is null!");
+        }
+        catch(Exception e){
+            infoText = "Error! " + e.Message;
+            return;
+        }
+        var result2 = new TypingGameResult(wordsPerMinute: WPM, errors: ErrorCount);
+        _logger.LogInformation("Saving typing game results: {WPM} WPM, {Errors} errors", WPM, ErrorCount);
+
+        await _httpClient.PostAsJsonAsync("api/typinggameresults", result2);
+    }
+}

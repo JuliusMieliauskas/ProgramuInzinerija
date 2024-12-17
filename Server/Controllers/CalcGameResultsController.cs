@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shared;
 using Data;
-using System.Linq;
+using System.Threading.Tasks;
+
+namespace Server.Controllers;
 using System.Threading.Tasks;
 
 [ApiController]

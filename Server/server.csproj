@@ -14,7 +14,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="../Shared/*.cs" />
+    <Content Include="Data\sample-text.txt">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- <Compile Include="../Shared/*.cs" /> -->
+    <ProjectReference Include="..\ClassLibrary\ClassLibrary.csproj" />
   </ItemGroup>
 
 </Project>

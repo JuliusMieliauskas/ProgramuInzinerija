@@ -12,7 +12,7 @@
             <h4 style="color: @(isCorrect ? "#10b981" : "#ef4444");">
                 @(isCorrect ? "Correct!" : "Wrong Answer. The correct answer was " + correctAnswer)
             </h4>
-            <button @onclick="GenerateNewProblem"
+            <button @onclick="OnInitialized"
                     style="padding: 8px 16px; background-color: #3b82f6; color: white; font-weight: bold; border-radius: 8px;">
                 Try Again
             </button>

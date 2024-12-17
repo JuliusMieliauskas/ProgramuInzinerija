@@ -36,6 +36,9 @@ public class ReactionGameControllerIntegrationTest : IClassFixture<WebApplicatio
         ReactionGameResult result = new ReactionGameResult(reactionTime: 2.1);
         await _client.PostAsJsonAsync("/api/ReactionGameResults", result);
 
+        var postResponse = await _client.PostAsJsonAsync("/api/ReactionGameResults", result);
+        Assert.Equal(HttpStatusCode.Created, postResponse.StatusCode);
+
         var data = JsonConvert.DeserializeObject<IEnumerable<ReactionGameResult>>(await response.Content.ReadAsStringAsync());
         var dataNew = await _client.GetFromJsonAsync<List<ReactionGameResult>>("api/reactiongameresults");
         if (dataNew == null)
