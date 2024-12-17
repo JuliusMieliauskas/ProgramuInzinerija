@@ -196,10 +196,8 @@ namespace Tests
                 remainingTime = 3
             };
 
-            // Act: Force the countdown to expire
             easyBase.ForceCountdownToExpire();
 
-            // Assert: Verify timer logic
             Assert.True(easyBase.timeIsUp);
             Assert.Equal(0, easyBase.remainingTime);
         }
@@ -227,10 +225,8 @@ namespace Tests
                 remainingTime = 3
             };
 
-            // Act: Force the countdown to expire
             mediumBase.ForceCountdownToExpire();
 
-            // Assert: Verify timer logic
             Assert.True(mediumBase.timeIsUp);
             Assert.Equal(0, mediumBase.remainingTime);
         }

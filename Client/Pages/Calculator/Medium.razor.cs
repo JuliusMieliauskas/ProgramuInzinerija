@@ -42,14 +42,14 @@ namespace Client.Pages
 
             switch (operationChoice)
             {
-                case 0: // Addition
+                case 0:
                     number1 = random.Next(1, 10);
                     number2 = random.Next(1, 10);
                     operation = "+";
                     correctAnswer = number1 + number2;
                     break;
 
-                case 1: // Subtraction
+                case 1:
                     number1 = random.Next(1, 10);
                     number2 = random.Next(1, 10);
 
@@ -61,14 +61,14 @@ namespace Client.Pages
                     correctAnswer = number1 - number2;
                     break;
 
-                case 2: // Multiplication
+                case 2:
                     number1 = random.Next(1, 10);
                     number2 = random.Next(1, 10);
                     operation = "*";
                     correctAnswer = number1 * number2;
                     break;
 
-                case 3: // Division
+                case 3:
                     number2 = random.Next(1, 10);
                     correctAnswer = random.Next(1, 6);
                     number1 = number2 * correctAnswer;

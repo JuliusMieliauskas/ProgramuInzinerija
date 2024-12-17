@@ -14,32 +14,30 @@ public class LeaderboardBase : ComponentBase {
     protected List<CalcGameResult> CalcGameResults { get; set; } = new List<CalcGameResult>();
     protected override async Task OnInitializedAsync()
     {
-        await LoadGameResults();
+        try
+        {
+            await LoadGameResults();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading results: {ex.Message}");
+        }
     }
-    
+
     private async Task LoadGameResults()
     {
-        if (_httpClient == null) throw new ClientNullException("HttpClient is null.");
-
-        // Fetch Typing Game Results
-        var typingResults = await _httpClient.GetFromJsonAsync<List<TypingGameResult>>("api/typinggameresults?sorted=true");
-        if (typingResults != null)
+        try
         {
-            TypingGameResults = typingResults;
+            var calcResults = await _httpClient.GetFromJsonAsync<List<CalcGameResult>>("api/calcgameresults");
+            if (calcResults != null)
+            {
+                CalcGameResults = calcResults;
+            }
         }
-
-        // Fetch Reaction Game Results
-        var reactionResults = await _httpClient.GetFromJsonAsync<List<ReactionGameResult>>("api/reactiongameresults");
-        if (reactionResults != null)
+        catch (Exception ex)
         {
-            ReactionGameResults = reactionResults.OrderBy(result => result.ReactionTime).ToList();
-        }
-
-        // Fetch Calc Game Results
-        var calcResults = await _httpClient.GetFromJsonAsync<List<CalcGameResult>>("api/calcgameresults");
-        if (calcResults != null)
-        {
-            CalcGameResults = calcResults;
+            Console.WriteLine($"Error fetching Calculation Game results: {ex.Message}");
         }
     }
+
 }

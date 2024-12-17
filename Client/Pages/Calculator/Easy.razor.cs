@@ -133,19 +133,26 @@ namespace Client.Pages
             GenerateNewProblem();
         }
 
-        public async void SaveResults()
+        public async Task SaveResults()
         {
             var result = new CalcGameResult
             {
                 Difficulty = "Easy",
                 CorrectAnswers = correctAnswers,
-                TotalRounds = totalRounds,
+                TotalRounds = totalRounds
             };
 
             try
             {
-                await HttpClient.PostAsJsonAsync("api/calcgameresults", result);
-                Console.WriteLine("Result saved successfully.");
+                var response = await HttpClient.PostAsJsonAsync("api/calcgameresults", result);
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("Result saved successfully.");
+                }
+                else
+                {
+                    Console.WriteLine($"Error: {response.StatusCode}, {await response.Content.ReadAsStringAsync()}");
+                }
             }
             catch (Exception ex)
             {
