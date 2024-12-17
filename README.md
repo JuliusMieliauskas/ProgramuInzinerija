@@ -6,7 +6,7 @@
 
 Julius Mieliauskas julius.mieliauskas@mif.stud.vu.lt<br>
 Ruslanas Maksimkinas ruslanas.maksiminas@mif.stud.vu.lt<br>
-Julija Mikeliūnaite julija.mikeliunaite@mif.stud.vu.lt<br>
+Julija Mikeliūnaitė julija.mikeliunaite@mif.stud.vu.lt<br>
 Martyna Valančiūtė martyna.valanciute@mif.stud.vu.lt
 
 ## Functionalities:
