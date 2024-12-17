@@ -19,7 +19,7 @@ public class MemoryBase : ComponentBase
     protected void NavigateToHard() => NavigationManager.NavigateTo("/hardMem");
 
     protected HttpClient? _httpClient { get; set; }
-    protected List<MemoryGameResult> memoryResultList = new List<MemeoryGameResult>();
+    //protected List<MemoryGameResult> memoryResultList = new List<MemeoryGameResult>();
 
     protected async Task SaveResults(){
         try
@@ -32,7 +32,7 @@ public class MemoryBase : ComponentBase
         }
         if (gameOver){
             MemoryGameResult result = new MemoryGameResult(missmatches: missmatches);
-            MemoryResultList.Add(result);
+            //MemoryResultList.Add(result);
 
             missmatches = 0;
             await _httpClient.PostAsJsonAsync("api/memorygameresults", result);

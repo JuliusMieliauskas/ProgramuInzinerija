@@ -54,10 +54,12 @@ public class LeaderboardBase : ComponentBase
         }
 
         // Fetch Reaction Game Results
+        /*
         var memoryResults = await _httpClient.GetFromJsonAsync<List<MemoryGameResult>>("api/memorygameresults");
         if (memoryResults != null)
         {
             MemoryGameResults = memoryResults.OrderBy(result => result.Missmatches).ToList();
         }
+        */
     }
 }
