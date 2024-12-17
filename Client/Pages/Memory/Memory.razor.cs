@@ -10,6 +10,8 @@ public class MemoryBase : ComponentBase
     protected int missmatches = 0;
     protected string message;
     protected bool gameOver = false;
+    private object MemoryResultList;
+
     public enum Difficulty { Easy, Medium, Hard }
     [Inject]
     protected NavigationManager? NavigationManager { get; set; }

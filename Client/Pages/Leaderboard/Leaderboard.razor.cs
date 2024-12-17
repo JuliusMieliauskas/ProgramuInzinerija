@@ -15,6 +15,7 @@ public class LeaderboardBase : ComponentBase
     protected List<TypingGameResult> TypingGameResults { get; set; } = new List<TypingGameResult>();
     protected List<ReactionGameResult> ReactionGameResults { get; set; } = new List<ReactionGameResult>();
     protected List<CalcGameResult> CalcGameResults { get; set; } = new List<CalcGameResult>();
+    protected List<MemoryGameResult> MemoryGameResults { get; set; } = new List<MemoryGameResult>();
     protected String infoText = "";
     protected override async Task OnInitializedAsync()
     {
@@ -54,12 +55,12 @@ public class LeaderboardBase : ComponentBase
         }
 
         // Fetch Reaction Game Results
-        /*
+        
         var memoryResults = await _httpClient.GetFromJsonAsync<List<MemoryGameResult>>("api/memorygameresults");
         if (memoryResults != null)
         {
             MemoryGameResults = memoryResults.OrderBy(result => result.Missmatches).ToList();
         }
-        */
+        
     }
 }
