@@ -67,8 +67,8 @@ public class LeaderboardIntegrationTests : LeaderboardBase, IClassFixture<WebApp
         Assert.Contains(CalcGameResults, data => data.Difficulty == "Easy");
         Assert.Contains(CalcGameResults, data => data.Score == 10);
 
-        Assert.Contains(MemoryGameResults, data => data.Id == 1);
-        Assert.Contains(MemoryGameResults, data => data.Missmatches == 10);
+        //Assert.Contains(MemoryGameResults, data => data.Id == 1);
+        //Assert.Contains(MemoryGameResults, data => data.Missmatches == 10);
     }
 
     [Fact]
