@@ -16,6 +16,7 @@ public static class ServiceExtensions
         services.AddScoped<IRepository<ReactionGameResult>, ReactionGameResultsRepository>();
         services.AddScoped<IRepository<TypingGameResult>, TypingGameResultRepository>();
         services.AddScoped<IRepository<CalcGameResult>, CalcGameResultRepository>();
+        services.AddScoped<IRepository<MemoryGameResult>, MemoryGameResultsRepository>();
         services.AddScoped<IRepository<ExceptionResult>, ExceptionResultRepository>();
 
         services.AddCors(options =>

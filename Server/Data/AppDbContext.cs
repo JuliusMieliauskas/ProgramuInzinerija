@@ -12,5 +12,7 @@ public class AppDbContext : DbContext
 
     public DbSet<CalcGameResult>? CalcGameResults { get; set; }
 
+    public DbSet<MemoryGameResult>? MemoryGameResults { get; set; }
+
     public DbSet<ExceptionResult>? ExceptionResults { get; set; }
 }

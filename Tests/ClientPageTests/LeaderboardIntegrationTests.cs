@@ -45,10 +45,12 @@ public class LeaderboardIntegrationTests : LeaderboardBase, IClassFixture<WebApp
             score: 10,
             id: 2
         );
+        var memoryResult = new MemoryGameResult(missmatches: 10);
 
         await _client.PostAsJsonAsync("/api/ReactionGameResults", reactionResult);
         await _client.PostAsJsonAsync("/api/CalcGameResults", calcResult);
         await _client.PostAsJsonAsync("/api/TypingGameResults", typingResult);
+        await _client.PostAsJsonAsync("/api/MemoryGameResults", memoryResult);
 
 
 
@@ -64,6 +66,9 @@ public class LeaderboardIntegrationTests : LeaderboardBase, IClassFixture<WebApp
         Assert.Contains(CalcGameResults, data => data.Id == 2);
         Assert.Contains(CalcGameResults, data => data.Difficulty == "Easy");
         Assert.Contains(CalcGameResults, data => data.Score == 10);
+
+        //Assert.Contains(MemoryGameResults, data => data.Id == 1);
+        //Assert.Contains(MemoryGameResults, data => data.Missmatches == 10);
     }
 
     [Fact]
