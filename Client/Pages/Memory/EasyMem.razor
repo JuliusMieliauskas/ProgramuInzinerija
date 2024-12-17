@@ -1,6 +1,8 @@
 @page "/easyMem"
+@using Shared
 
 @code{
+	protected HttpClient _httpClient { get; set; }
     int numberOfCards = 16;
 	List<int> cards = new List<int>();
 	int[] cardArray = new int[16];
@@ -52,6 +54,16 @@
 		});
 
 	}
+	protected async Task SubmitResult(int Missmatches)
+    {
+        var result = new MemoryGameResult
+        {
+            //Difficulty = "Easy",
+            Missmatches = missmatches
+        };
+
+        await _httpClient.PostAsJsonAsync("api/memorygameresults", result);
+    }
 }
 
 <PageTitle>Memory: Easy difficulty</PageTitle>
